@@ -1,0 +1,10 @@
+.entry-card h4{
+  display: inline;
+  padding: 12px;
+}
+.entry-card{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: auto;
+}
