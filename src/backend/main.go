@@ -1,6 +1,7 @@
 package main
 
 import (
+	"backend/models"
 	_ "backend/routers"
 	"fmt"
 
@@ -10,6 +11,7 @@ import (
 )
 
 func main() {
+
 	if beego.BConfig.RunMode == "dev" {
 		beego.BConfig.WebConfig.DirectoryIndex = true
 		beego.BConfig.WebConfig.StaticDir["/swagger"] = "swagger"
@@ -25,6 +27,7 @@ func main() {
 	} else {
 		fmt.Println("database connected")
 	}
-
 	beego.Run()
+	models.Init()
+
 }

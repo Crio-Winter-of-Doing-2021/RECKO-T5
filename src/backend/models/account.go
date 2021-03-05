@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/beego/beego/v2/client/orm"
@@ -19,13 +20,13 @@ type Account struct {
 	Updated     int64  `json:"updated"`
 }
 
-// Insert ...
-func (a *Account) Insert() error {
-
+// InsertAccount ...
+func (a *Account) InsertAccount() error {
 	a.Created = time.Now().UnixNano()
 	a.Updated = a.Created
-
+	fmt.Println(a)
 	if _, err := orm.NewOrm().Insert(a); err != nil {
+		fmt.Println(err)
 		return err
 	}
 	return nil

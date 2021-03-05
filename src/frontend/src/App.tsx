@@ -1,5 +1,6 @@
 import React from 'react';
 import EntryCard from './components/EntryCard';
+
 function App() {
   return (
     <div className="App">
