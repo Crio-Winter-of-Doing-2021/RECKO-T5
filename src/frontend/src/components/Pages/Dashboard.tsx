@@ -10,7 +10,7 @@ const DashBoard: React.FC<DashBoardProps> = () => {
       accounts = {[
         {id : "1", accountId:"abcd1234", accountName:"Triumph", date:"21/06/2021", provider:"XERO", type:"credit", amount:2000},
         {id : "2", accountId:"abcd1234", accountName:"Triumph", date:"21/06/2021", provider:"XERO", type:"debit", amount:2000},
-        {id : "2", accountId:"abcd1234", accountName:"Triumph", date:"21/06/2021", provider:"XERO", type:"credit", amount:2000}
+        {id : "3", accountId:"abcd1234", accountName:"Triumph", date:"21/06/2021", provider:"XERO", type:"credit", amount:2000}
       ]}
     />
   );

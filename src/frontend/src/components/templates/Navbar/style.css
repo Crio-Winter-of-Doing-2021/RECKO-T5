@@ -1,0 +1,13 @@
+.navbar{
+  width: 100%;
+  padding:14px 20px;
+  background-color: azure;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar h4{
+  display: inline;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
