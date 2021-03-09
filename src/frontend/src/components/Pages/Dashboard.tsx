@@ -6,6 +6,7 @@ export interface DashBoardProps {
  
 const DashBoard: React.FC<DashBoardProps> = () => {
   return (
+    <>
     <AccountTable 
       accounts = {[
         {id : "1", accountId:"abcd1234", accountName:"Triumph", date:"21/06/2021", provider:"XERO", type:"credit", amount:2000},
@@ -13,6 +14,7 @@ const DashBoard: React.FC<DashBoardProps> = () => {
         {id : "3", accountId:"abcd1234", accountName:"Triumph", date:"21/06/2021", provider:"XERO", type:"credit", amount:2000}
       ]}
     />
+    </>
   );
 }
  
