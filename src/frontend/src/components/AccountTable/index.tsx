@@ -17,6 +17,7 @@ export interface AccountTableProps{
 
 const AccountTable : React.FC<AccountTableProps> = ({accounts}) => {
   return (
+    <div style= {{overflowX : "scroll"}}>
     <Table variant="simple">
         <TableCaption>Accounting records</TableCaption>
         <Thead>
@@ -33,6 +34,7 @@ const AccountTable : React.FC<AccountTableProps> = ({accounts}) => {
         {
           accounts.map((acc) => {
             return <AccountRow 
+                    key = {acc.id}
                     provider={acc.provider}
                     accountName = {acc.accountName}
                     date = {acc.date}
@@ -43,7 +45,8 @@ const AccountTable : React.FC<AccountTableProps> = ({accounts}) => {
           })
         }
         </Tbody>
-    </Table>        
+    </Table>  
+  </div>      
   )
  
 }
