@@ -1,5 +1,6 @@
 import DashBoard from './components/Pages/Dashboard'
 import Navbar from './components/templates/Navbar';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -21,5 +22,4 @@ function App() {
     </Router>
   );
 }
-
 export default App;

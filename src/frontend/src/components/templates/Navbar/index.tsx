@@ -2,13 +2,17 @@ import './style.css'
 import {Button, Heading, useDisclosure} from '@chakra-ui/react'
 import React from 'react'
 import SideDrawer from "../../SideDrawer"
+<<<<<<< HEAD
 import {Link, useLocation} from 'react-router-dom'
+=======
+>>>>>>> main
 
 export interface NavbarProps {
   
 }
  
 const Navbar: React.FC<NavbarProps> = () => {
+<<<<<<< HEAD
   const location = useLocation()
 
   const currentPath = location.pathname
@@ -30,6 +34,16 @@ const Navbar: React.FC<NavbarProps> = () => {
         </Button>}
       </div>
 
+=======
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const firstField = React.useRef(null)
+  return (
+    <nav className="navbar">
+      <Heading d="inline" size="lg">Recko</Heading>
+      <Button  colorScheme="gray" onClick={onOpen}>
+        Demographs
+      </Button>
+>>>>>>> main
       <SideDrawer 
         isOpen = {isOpen}
         onClose = {onClose}

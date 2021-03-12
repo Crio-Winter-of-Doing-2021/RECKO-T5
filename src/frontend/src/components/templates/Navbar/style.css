@@ -13,5 +13,10 @@
 .navbar-options h6{
   margin:  auto 10px;
   padding:10px;
+}
+
+.navbar h4{
+  display: inline;
+  font-size: 1.5rem;
   font-weight: 600;
 }
