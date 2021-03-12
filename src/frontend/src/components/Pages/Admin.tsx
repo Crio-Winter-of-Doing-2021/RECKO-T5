@@ -4,7 +4,7 @@ export interface AdminPageProps {
  
 const AdminPage: React.FC<AdminPageProps> = () => {
   return (
-    <h1>Admin</h1>
+    <h1>Admin Page</h1>
   );
 }
  
