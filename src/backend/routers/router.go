@@ -30,6 +30,11 @@ func init() {
 				&controllers.JournalController{},
 			),
 		),
+		beego.NSNamespace("/employee",
+			beego.NSInclude(
+				&controllers.EmployeeController{},
+			),
+		),
 	)
 	beego.AddNamespace(ns)
 }
