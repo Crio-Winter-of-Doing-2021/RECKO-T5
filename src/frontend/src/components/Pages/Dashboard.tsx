@@ -11,7 +11,6 @@ const DashBoard: React.FC<DashBoardProps> = () => {
     headers:{
       "Content-type":"application/json"
     },
-    body:null,
     method:"GET"
   })
   if(error) {

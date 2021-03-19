@@ -1,9 +1,15 @@
 import {Box} from '@chakra-ui/react'
 
+export interface externalLink{
+  url:string
+  description:string
+}
+
 export interface EmployeeCardProps {
   id : string
   firstName : string
   lastName : string
+  externalLink:externalLink
 }
  
 const EmployeeCard: React.FC<EmployeeCardProps> = ({id, firstName, lastName}) => {
