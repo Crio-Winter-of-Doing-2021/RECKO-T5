@@ -7,6 +7,7 @@ import (
 
 	"github.com/beego/beego/v2/client/orm"
 	beego "github.com/beego/beego/v2/server/web"
+	"github.com/beego/beego/v2/server/web/filter/cors"
 	_ "github.com/lib/pq"
 )
 
@@ -27,6 +28,15 @@ func main() {
 	} else {
 		fmt.Println("database connected")
 	}
+
+	beego.InsertFilter("*", beego.BeforeRouter, cors.Allow(&cors.Options{
+		AllowAllOrigins:  true,
+		AllowCredentials: true,
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Content-Type", "Origin", "Authorization", "Access-Control-Allow-Origin", "X-User-ApiKey", "X-Token"},
+		ExposeHeaders:    []string{"Content-Length", "Access-Control-Allow-Origin"},
+	}), beego.WithReturnOnOutput(false))
+
 	beego.Run()
 	models.Init()
 

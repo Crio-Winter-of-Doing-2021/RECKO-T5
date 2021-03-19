@@ -7,12 +7,12 @@ export interface AccountRowProps {
   accountId : string,
   amount : Number,
   date : string,
-  type : "debit" | "credit"
+  type : "DEBIT" | "CREDIT"
   provider : string
 }
  
 const AccountRow: React.FC<AccountRowProps> = ({provider, accountName, accountId, amount, date, type}) => {
-  const ColorOfTag : string = type === "credit" ? "green" : "red"
+  const ColorOfTag : string = type.toUpperCase() === "CREDIT" ? "green" : "red"
   return (
         <Tr>
           <Td>{provider}</Td>
