@@ -9,7 +9,7 @@ export interface EmployeeCardProps {
   id : string
   firstName : string
   lastName : string
-  externalLink:externalLink
+  // externalLink:externalLink
 }
  
 const EmployeeCard: React.FC<EmployeeCardProps> = ({id, firstName, lastName}) => {
