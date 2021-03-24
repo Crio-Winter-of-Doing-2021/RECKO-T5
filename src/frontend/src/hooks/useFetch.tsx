@@ -25,7 +25,7 @@ const useFetch: any = ({url, headers, method, body }:useFetchProps) => {
           headers,
           data:body,
           method,
-          baseURL:"http://localhost:8080/v1",
+          baseURL:"http://localhost:5000/api",
         })
         setState(response.data)
         setError(null)
