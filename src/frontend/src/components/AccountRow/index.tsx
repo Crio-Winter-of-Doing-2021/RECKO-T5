@@ -1,11 +1,11 @@
-import { Tag, TagLabel, Tr, Td } from "@chakra-ui/react"
+import { Tag, TagLabel, Tr, Td, AbsoluteCenter } from "@chakra-ui/react"
 // import './style.css'
 
 export interface AccountRowProps {
   id ?: string,
   accountName : string,
   accountId : string,
-  amount : Number,
+  amount : number,
   date : string,
   type : "DEBIT" | "CREDIT"
   provider : string
@@ -16,7 +16,7 @@ const AccountRow: React.FC<AccountRowProps> = ({provider, accountName, accountId
   return (
         <Tr>
           <Td>{provider}</Td>
-          <Td>{date}</Td>
+          <Td>{new Date(date).toLocaleDateString()}</Td>
           <Td>{accountName}</Td>
           <Td>{accountId}</Td>
           <Td>
@@ -24,7 +24,7 @@ const AccountRow: React.FC<AccountRowProps> = ({provider, accountName, accountId
             <TagLabel>{type}</TagLabel>  
           </Tag>
           </Td>
-          <Td isNumeric>{amount}</Td>
+          <Td isNumeric>{Math.abs(amount)}</Td>
         </Tr>
   );
 }
