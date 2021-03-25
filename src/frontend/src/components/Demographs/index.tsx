@@ -1,5 +1,6 @@
 import { Doughnut } from 'react-chartjs-2';
- 
+import {journalDataContext} from '../../context/journalDataProvider'
+import {useContext} from 'react'
 
  export interface DemographsProps {
    
@@ -25,6 +26,8 @@ import { Doughnut } from 'react-chartjs-2';
 }
 
  const Demographs: React.FC<DemographsProps> = () => {
+   const {journals} = useContext(journalDataContext)
+   console.log(journals)
    return (
      <div>
       <Doughnut data= {data} />

@@ -1,5 +1,6 @@
 import AccountRow, {AccountRowProps} from "../AccountRow";
 
+
 import {
   Table,
   Thead,
@@ -8,10 +9,10 @@ import {
   Th,
   TableCaption,
 } from "@chakra-ui/react"
-import React from "react";
+
 
 export interface AccountTableProps{
-  accounts : Array<AccountRowProps>
+  accounts : Array<AccountRowProps> 
 }
 
 
@@ -34,7 +35,7 @@ const AccountTable : React.FC<AccountTableProps> = ({accounts}) => {
         {
           accounts.map((acc) => {
             return <AccountRow 
-                    key = {acc.id}
+                    key = {acc._id}
                     provider={acc.provider}
                     accountName = {acc.accountName}
                     date = {acc.date}

@@ -1,8 +1,8 @@
-import { Tag, TagLabel, Tr, Td, AbsoluteCenter } from "@chakra-ui/react"
+import { Tag, TagLabel, Tr, Td } from "@chakra-ui/react"
 // import './style.css'
 
 export interface AccountRowProps {
-  id ?: string,
+  _id ?: string,
   accountName : string,
   accountId : string,
   amount : number,
