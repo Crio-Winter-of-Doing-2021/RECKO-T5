@@ -1,11 +1,14 @@
 import AccountTable from '../AccountTable'
 import useFetch from '../../hooks/useFetch'
+import {useContext} from 'react'
+import  {journalDataContext} from '../../context/journalDataProvider'
 
 export interface DashBoardProps {
   
 }
  
 const DashBoard: React.FC<DashBoardProps> = () => {
+  const {setJournals} = useContext(journalDataContext)
   const {state, loading, error} = useFetch({
     url:"/journal",
     headers:{
@@ -13,6 +16,7 @@ const DashBoard: React.FC<DashBoardProps> = () => {
     },
     method:"GET"
   })
+
   if(error) {
     console.log(error)
     return <h1>error</h1>
@@ -20,6 +24,8 @@ const DashBoard: React.FC<DashBoardProps> = () => {
   if(loading){
     return <h1>Loading...</h1>
   }
+
+  setJournals(state)
   return (
       <>
         <AccountTable 
@@ -27,14 +33,6 @@ const DashBoard: React.FC<DashBoardProps> = () => {
         />
       </>
     );
-  
 }
  
 export default DashBoard;
-
-
-// [
-//   {id : "1", accountId:"abcd1234", accountName:"Triumph", date:"21/06/2021", provider:"XERO", type:"credit", amount:2000},
-//   {id : "2", accountId:"abcd1234", accountName:"Triumph", date:"21/06/2021", provider:"XERO", type:"debit", amount:2000},
-//   {id : "3", accountId:"abcd1234", accountName:"Triumph", date:"21/06/2021", provider:"XERO", type:"credit", amount:2000}
-// ]

@@ -8,16 +8,22 @@ import {
 } from "react-router-dom";
 
 import AdminPage from './components/Pages/Admin';
+import JournalDataContextProvider from './context/journalDataProvider';
+import { ChakraProvider } from "@chakra-ui/react"
 
 function App() {
   return (
     <Router>
       <Switch>
-        <div className="App">
-          <Navbar />
-          <Route path="/" exact component={DashBoard} />
-          <Route path="/admin" component={AdminPage} />
-        </div>
+      <ChakraProvider>
+        <JournalDataContextProvider>
+          <div className="App">
+            <Navbar />
+            <Route path="/" exact component={DashBoard} />
+            <Route path="/admin" component={AdminPage} />
+          </div>
+        </JournalDataContextProvider>
+        </ChakraProvider>
       </Switch>
     </Router>
   );
