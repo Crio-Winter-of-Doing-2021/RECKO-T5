@@ -1,6 +1,8 @@
 import { Box, Heading, Image } from "@chakra-ui/react"
 import useFetch from "../../hooks/useFetch"
 import Employees from "../Employees"
+import Error from "../Error"
+import Loading from "../Loading"
 
 export interface AdminPageProps {
   
@@ -13,10 +15,10 @@ const AdminPage: React.FC<AdminPageProps> = () => {
   })
   if(error) {
     console.log(error)
-    return <h1>error</h1>
+    return <Error error={error} />
   }
   if(loading){
-    return <h1>Loading...</h1>
+    return <Loading />
   }
   return (
     <Box>
