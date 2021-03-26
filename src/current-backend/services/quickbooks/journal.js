@@ -12,7 +12,7 @@ const getAllJournals = async (callback) => {
     // await refreshQuickBooksTokenSet(oauthClient.getToken())
     const qbo = getQuickBooksClient(access_token, refresh_token)
     return new Promise((resolve, reject) => {
-      qbo.findJournalEntries({limit:10}, (err,queryResponse)=>{
+      qbo.findJournalEntries({}, (err,queryResponse)=>{
         if(err) {
           console.log(err)
           // throw err

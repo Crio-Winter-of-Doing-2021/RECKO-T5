@@ -19,9 +19,8 @@ const API = require('./routers')
 
 
 // schedule jobs here : 
-const scheduleJobForJournals = require('./scheduled_jobs/journal')
-scheduleJobForJournals()
-
+const Scheduler = require('./scheduled_jobs')
+Scheduler()
 
 // middleware 
 app.use(cors())
@@ -37,18 +36,20 @@ app.use(session({
 // main API 
 app.use('/', API)
 
-app.get('/quickbook/company',async (req, res)=> {
+app.get('/quickbook/employee',async (req, res)=> {
   try{
     await setQuickBooksTokenSet()
     const {access_token, refresh_token} = oauthClient.getToken()
     // await refreshQuickBooksTokenSet(oauthClient.getToken())
     const qbo = getQuickBooksClient(access_token, refresh_token)
-    qbo.findCompanyInfos({}, (err,accounts)=>{
+    qbo.findEmployees({}, (err,accounts)=>{
       if(err) {
         // console.log(err)
         res.send(err)
       }
-      else res.json({accounts})
+      else {
+        res.json({accounts})
+      }
       // console.log()
     })
     // qbo.createEmployee
@@ -69,7 +70,17 @@ app.get('/quickbook/account',async (req, res)=> {
         // console.log(err)
         res.send(err)
       }
-      else res.json({accounts})
+      else {
+        const mappedData = accounts.QueryResponse.Account.map((acc) => ({
+            aid:acc.Id,
+            name:acc.Name,
+            type:acc.AccountType,
+            active:acc.Active,
+            class:acc.Classification
+        }))
+
+        res.send(mappedData)
+      }
       // console.log()
     })
   }catch(e){
