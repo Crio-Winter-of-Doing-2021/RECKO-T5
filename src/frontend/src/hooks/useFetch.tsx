@@ -19,7 +19,7 @@ const useFetch: any = ({url, headers, method, body }:useFetchProps) => {
   const callAPI = useCallback(async ()=>{
       // set everything here
       setLoading(true)
-      console.log("api called");
+      console.log(`API called at '/api${url}'`);
       try{
         const response = await axios(url, {
           headers,
