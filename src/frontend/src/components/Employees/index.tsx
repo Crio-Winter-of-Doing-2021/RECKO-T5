@@ -15,8 +15,9 @@ const Employees: React.FC<EmployeesProps> = ({employees}) => {
           employees.map((employee) => {
             return (
             <EmployeeCard 
-              key = {employee.id}
-              id = {employee.id}
+              key = {employee._id}
+              _id = {employee._id}
+              eid = {employee.eid}
               firstName={employee.firstName} 
               lastName = {employee.lastName}
             />

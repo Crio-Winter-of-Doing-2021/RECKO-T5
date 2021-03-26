@@ -6,17 +6,18 @@ export interface externalLink{
 }
 
 export interface EmployeeCardProps {
-  id : string
+  _id:string
+  eid : string
   firstName : string
   lastName : string
   // externalLink:externalLink
 }
  
-const EmployeeCard: React.FC<EmployeeCardProps> = ({id, firstName, lastName}) => {
+const EmployeeCard: React.FC<EmployeeCardProps> = ({_id ,eid, firstName, lastName}) => {
   return (
     <Box fontSize="md" backgroundColor="gray.50" padding="20px" d="flex" flexDirection="column" margin="10px" borderRadius="md">
       <Box color="gray.800" fontSize="md" d="inline">
-           id : {id}
+           id : {eid}
       </Box>
       <Box
           mt="1"
