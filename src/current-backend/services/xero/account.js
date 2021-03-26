@@ -10,8 +10,17 @@ const getAllAccounts = async () => {
     // GET ALL
     await setXeroTokenSet()
     const accountsGetResponse = await xero.accountingApi.getAccounts(xeroTenantId);
-    return accountsGetResponse
-  } catch (e) {
+    const accounts = accountsGetResponse.response.body.Accounts
+    const mappedData = accounts.map((acc) => ({
+      aid:acc.AccountID,
+      name:acc.Name,
+      active:acc.Status === "ACTIVE",
+      class: acc.Class,
+      type:acc.Type,
+      provider:"XERO"
+    }))
+    return mappedData
+  } catch(e){
     console.log(e)
     throw e
   }

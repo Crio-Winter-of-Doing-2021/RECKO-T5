@@ -1,48 +1,32 @@
 const mongoose = require("mongoose")
 
 const AccountSchema = new mongoose.Schema({
-  aid:{
-    type : String,
-    required:[true, "Every account entry must have an ID."],
-    trim:true
-  },
-  code:{
-    type : String,
-    required:[true, "Every account entry must have code."],
-    trim:true
-  },
-  name:{
-    type : String,
-    required:[true, "Every account entry must have code."],
-    trim:true
-  },
   type:{
-    type:String,
-    enum:["BANK", "CURRENT", "CURRLIAB", "DEPRECIATN", "DIRECTCOSTS", "EQUITY", "EXPENSE", "FIXED", "INVENTORY", "LIABILITY", "NONCURRENT", "OTHERINCOME", "OVERHEADS", "PREPAYMENT", "REVENUE", "SALES", "TERMLIAB", "PAYGLIABILITY", "SUPERANNUATIONEXPENSE", "SUPERANNUATIONLIABILITY", "WAGESEXPENSE"],
-    required:[true, "Every account entry must type."],
-    trim:true,
+    type:String, 
+    required:[true, "type of account is required"],
     uppercase:true
   },
-  bankAccountNumber:{
-    type : String,
-    trim:true
+  active:{
+    type:Boolean,
+    required:[true, "status of account is required"]
   },
-  status:{
+  name:{
     type:String,
-    enum:["ACTIVE", "ARCHIVED"]
+    required:[true, "name of id is required"]
   },
-  description:{
-    type:String
-  },
-  bankAccountType:{
+  aid:{
     type:String,
-    enum: ["BANK", "CREDITCARD", "PAYPAL"]
+    required:[true, "account id is reuqired"],
+    unique:[true, "account must have a unique identifier"]
   },
-  currencyCode:{
-    type:String
+  class:{
+    type:String,
+    uppercase:true
   },
-  enablePaymentsToAccount:{
-    type:Boolean
+  provider:{
+    type:String,
+    uppercase:true,
+    enum : ["QUICKBOOKS", "XERO"]
   }
 })
 
