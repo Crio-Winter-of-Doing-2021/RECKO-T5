@@ -18,10 +18,15 @@ const refreshXeroTokenSet = async (tokenSet) => {
 const setXeroTokenSet = async () => {
   // gets the token from db
   try{
+    const check = xero.readTokenSet()
+    if(check.access_token && !check.expired()){
+      console.log("Xero token already set")
+      return
+    }
     let tokenSet = await getXeroTokenSet()
     // if tokenSet is not avialable return
     if(!tokenSet){
-      console.log("Token Set not found please process with authorization first")
+      console.log("XERO Token Set not found please process with authorization first")
       return;
     }
     // console.log(tokenSet)
@@ -38,12 +43,12 @@ const setXeroTokenSet = async () => {
       ts._id = undefined
       ts.__v = undefined
       xero.setTokenSet(ts.token)
-      console.log("token set successfully updated and set")
+      console.log("Xero token successfully updated and set")
       return
     }
     // console.log(new Date())
     xero.setTokenSet(tokenSet)
-    console.log("token set successfully set")
+    console.log("xero token successfully set")
     return
   }catch(e){
     console.log(e)

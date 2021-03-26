@@ -25,10 +25,15 @@ const refreshQuickBooksTokenSet = async (tokenSet) => {
 const setQuickBooksTokenSet = async () => {
   // gets the token from db
   try{
+    const check = oauthClient.getToken()
+    if(check.accessToken && check.isAccessTokenValid()){
+      console.log("QUICKBOOKS token already set")
+      return;
+    }
     let tokenSet = await getQuickBooksTokenSet()
     // if tokenSet is not avialable return
     if(!tokenSet){
-      console.log("Token Set not found please process with authorization first")
+      console.log("QUICKBOOKS Token Set not found please process with authorization first")
       return;
     }
     // console.log("the token set from db " , tokenSet)
@@ -42,11 +47,11 @@ const setQuickBooksTokenSet = async () => {
       // saves the new token
       const ts = await DBTokenSet.save() 
       // set the token now
-      console.log("token set successfully updated and saved")
+      console.log("Quickbook token successfully updated and set")
       // console.log(ts)
       return
     }
-    console.log("token set successfully")
+    console.log("Quickbook token successfully set")
     return
   }catch(e){
     console.log(e)
