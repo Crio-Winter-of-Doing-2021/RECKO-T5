@@ -8,7 +8,15 @@ const getAllEmployees = async () => {
     // GET ALL
     await setXeroTokenSet()
     const employeesGetResponse = await xero.accountingApi.getEmployees(xeroTenantId);
-    return employeesGetResponse
+    const employees =  employeesGetResponse.body.employees.map((emp) => {
+      return {
+        eid : emp.employeeID,
+        active : emp.status === "ACTIVE",
+        firstName: emp.firstName,
+        lastName : emp.lastName
+      }
+    })
+    return employees
   } catch (e) {
     console.log(e)
     throw e

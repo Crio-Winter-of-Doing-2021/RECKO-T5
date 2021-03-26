@@ -17,7 +17,6 @@ const refreshQuickBooksTokenSet = async (tokenSet) => {
     return authResponse.token
   }catch(e){
     console.error('The error message is :' + e.originalMessage);
-    console.error(e.intuit_tid);
     throw e
   }
   
