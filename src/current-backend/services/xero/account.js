@@ -9,7 +9,8 @@ const getAllAccounts = async () => {
   try {
     // GET ALL
     await setXeroTokenSet()
-    const accountsGetResponse = await xero.accountingApi.getAccounts(xeroTenantId);
+    const tenants = await xero.updateTenants()
+    const accountsGetResponse = await xero.accountingApi.getAccounts(tenants[0].tenantId);
     const accounts = accountsGetResponse.response.body.Accounts
     const mappedData = accounts.map((acc) => ({
       aid:acc.AccountID,
@@ -27,8 +28,6 @@ const getAllAccounts = async () => {
 }
 const getAnAccount = async (id) => {
   try {
-    await setXeroTokenSet()
-    // GET ALL
     await setXeroTokenSet()
     const accountGetResponse = await xero.accountingApi.getAccount(xeroTenantId, id);
     return accountGetResponse
