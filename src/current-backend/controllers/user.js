@@ -30,7 +30,7 @@ class UserController{
   async register(req, res){
     const user = req.body
     const {name, email, password, admin} = user
-    if(!name || !email || !password || !admin){
+    if(!name || !email || !password || admin===undefined){
       res.status(400).json({error:"Please fill all the required fields"})
       return
     }
@@ -43,6 +43,10 @@ class UserController{
       await newUser.save()
       res.status(200).json({message:"New user has been created"})
     }catch(e){
+      if(e.code === 11000){
+        res.status(400).json({error:"duplicate user(email) can't be created"})
+        return
+      }
       console.log(e)
       res.status(400).json({error:e.message})
     }
@@ -57,7 +61,7 @@ class UserController{
     }
     try{
       // get the user by email
-      const user = await User.find({email})
+      const user = await User.findOne({email})
       if(user){
         // if found, check password using bcrypt
         // use bcrypt here
@@ -89,6 +93,15 @@ class UserController{
     }catch(e){
       console.log(e)
       res.status(500).json({error:"something went wrong"})
+    }
+  }
+  async GetAllUsers(req, res){
+    try{
+      const users = await User.find()
+      res.send(users)
+    }catch(e){
+      console.log(e)
+      res.status(404).json({error:e})
     }
   }
 }
