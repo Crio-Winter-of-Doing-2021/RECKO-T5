@@ -1,5 +1,9 @@
 const mongoose = require('mongoose')
 
+const passwordValidator = (pass) => {
+  return pass.length > 5
+}
+
 const UserSchema = new mongoose.Schema({
   name:{
     type:String,
@@ -21,9 +25,5 @@ const UserSchema = new mongoose.Schema({
     default:false
   }
 })
-
-const passwordValidator = (pass) => {
-  return pass.length > 5
-}
 
 module.exports = new mongoose.model(UserSchema, "User");
