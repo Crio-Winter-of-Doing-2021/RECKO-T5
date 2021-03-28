@@ -7,7 +7,8 @@ const getAllEmployees = async () => {
   try {
     // GET ALL
     await setXeroTokenSet()
-    const employeesGetResponse = await xero.accountingApi.getEmployees(xeroTenantId);
+    const tenants = await xero.updateTenants()
+    const employeesGetResponse = await xero.accountingApi.getEmployees(tenants[0].tenantId);
     const employees =  employeesGetResponse.body.employees.map((emp) => {
       return {
         eid : emp.employeeID,
