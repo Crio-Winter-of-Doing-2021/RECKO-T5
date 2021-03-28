@@ -3,21 +3,27 @@ const XERO = require('../services/xero')
 const Employee = require('../models/employee')
 
 const updateEmployeeDatabase = () => {
-  const q_acc = QUICKBOOKS.getAllEmployees()
-  const x_acc = XERO.getAllEmployees()
-  const accounts = Promise.all([q_acc, x_acc]).then((async ([x,y]) => {
-    const allEmployees = [...x, ...y]
-    try{
-      const saveEntries = await Employee.insertMany(allEmployees)
-      // console.log(saveEntries)
-    }catch(e){
-      if(e.code === 11000){
-        console.log("duplicate document")
-      }else
-        console.log(e)
-    }
-    console.log(allEmployees.length)
-  }))
+  try{
+    const q_acc = QUICKBOOKS.getAllEmployees()
+    const x_acc = XERO.getAllEmployees()
+    const accounts = Promise.all([q_acc, x_acc]).then((async ([x,y]) => {
+      const allEmployees = [...x, ...y]
+      try{
+        const saveEntries = await Employee.insertMany(allEmployees)
+        // console.log(saveEntries)
+      }catch(e){
+        if(e.code === 11000){
+          console.log("duplicate document")
+        }else
+          console.log(e)
+      }
+      console.log(allEmployees.length)
+    }))
+  }catch(e){
+    console.log(e)
+    throw e
+  }
+  
 } 
 
 const scheduleJobForEmployee  = () => {
