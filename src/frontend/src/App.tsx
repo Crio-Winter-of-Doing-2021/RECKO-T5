@@ -10,6 +10,7 @@ import {
 import AdminPage from './components/Pages/Admin';
 import JournalDataContextProvider from './context/journalDataProvider';
 import { ChakraProvider } from "@chakra-ui/react"
+import LoginPage from './components/Pages/Login';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Navbar />
             <Route path="/" exact component={DashBoard} />
             <Route path="/admin" component={AdminPage} />
+            <Route path="/login" component={LoginPage} />
           </div>
         </JournalDataContextProvider>
         </ChakraProvider>
