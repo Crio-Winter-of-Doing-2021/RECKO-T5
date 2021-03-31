@@ -1,22 +1,18 @@
-import {FormControl, FormLabel, Input, RadioGroup, Radio, Button, Box, Heading} from '@chakra-ui/react'
+import {FormControl, FormLabel, Input, Button, Box, Heading} from '@chakra-ui/react'
 // import useFetch from '../../hooks/useFetch'
 import {useState} from 'react'
 
-export interface RegisterFormProps {
-  name:string
+export interface LoginFormProps {
   email:string
   password:string
-  admin : boolean
 }
  
-const RegisterForm: React.FC = () => {
-  const [formData, setFormData] = useState<RegisterFormProps>({
-    name:"",
+const LoginForm: React.FC = () => {
+  const [formData, setFormData] = useState<LoginFormProps>({
     email:"",
-    password:"",
-    admin:false
+    password:""
   })
-
+  
   // const {state, error, loading} = useFetch({
   //   url:"/register",
   //   headers:{
@@ -37,27 +33,15 @@ const RegisterForm: React.FC = () => {
   }
   return (
     <Box width="80%" maxWidth="400px" margin="auto" mt="10" background="orange.50" padding="20px">
-      <Heading mb="5">Register.</Heading>
+      <Heading mb="5">Login.</Heading>
       <form onSubmit={onSubmitHandler}>
       <FormControl isRequired>
-        {/* name field */}
-        <FormLabel>Name</FormLabel>
-        <Input placeholder="name" name="name" onChange={onChangeHandler} value={formData.name} />
         {/* email field */}
         <FormLabel>Email</FormLabel>
         <Input placeholder="Email" name="email" type="email" onChange={onChangeHandler} value={formData.email} />
         {/* password field */}
         <FormLabel>Password</FormLabel>
         <Input type="password" placeholder="Password" name="password" onChange={onChangeHandler} value={formData.password} />
-        {/* admin field */}
-        <FormLabel>Position</FormLabel>
-        <RadioGroup defaultValue="false" value={formData.admin === true ? "true" : "false"} onChange={(val) => {
-          const admin = val === "true"
-          setFormData((prev) => ({...prev, admin }))
-        }}>
-          <Radio value="false">regular</Radio>
-          <Radio value="true">admin</Radio>
-        </RadioGroup>
         {/* submit button */}
         <Button
         mt={4}
@@ -70,4 +54,4 @@ const RegisterForm: React.FC = () => {
   );
 }
  
-export default RegisterForm;
+export default LoginForm;

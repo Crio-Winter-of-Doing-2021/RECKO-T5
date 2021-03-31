@@ -1,4 +1,5 @@
-import RegisterForm from "../RegisterForm";
+import LoginForm from "../LoginForm";
+
 
 export interface LoginPageProps {
   
@@ -6,7 +7,9 @@ export interface LoginPageProps {
  
 const LoginPage: React.FC<LoginPageProps> = () => {
   return (
-    <RegisterForm />
+    <div style={{height:"80vh"}}>
+    <LoginForm />
+    </div>
   );
 }
  
