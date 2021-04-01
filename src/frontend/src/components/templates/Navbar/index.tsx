@@ -16,16 +16,22 @@ export interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = () => {
   const {state, dispatch} = useContext(UserContext)
   const location = useLocation()
-
+  
   const currentPath = location.pathname
+
+  const showDemographButton:boolean = currentPath === "/" 
+  const showLogoutButton:boolean = state.user ? true:false 
   const getNavLinks = () => {
+    if((currentPath === "/login" || currentPath === "/register") && showLogoutButton){
+      return {navLink: "/", navLinkName:"Dashboard"}
+    }
     switch(currentPath){
       case "/admin":
         return {navLink: "/", navLinkName:"Dashboard"}
       case "/":
         return {navLink:"/admin", navLinkName:"Admin"}
       case "/login":
-        return {navLink:"/register", navLinkName:"Register"}
+        return {navLink:"/register", navLinkName:"Register"} 
       case "/register":
         return {navLink:"/login", navLinkName:"Login"}
       default:
@@ -33,9 +39,6 @@ const Navbar: React.FC<NavbarProps> = () => {
     }
   }
   const {navLink, navLinkName} = getNavLinks()
-
-  const showDemographButton:boolean = currentPath === "/" 
-  const showLogoutButton:boolean = state.user ? true:false 
 
 
   const { isOpen, onOpen, onClose } = useDisclosure()

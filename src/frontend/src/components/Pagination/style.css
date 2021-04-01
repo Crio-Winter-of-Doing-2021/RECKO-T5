@@ -1,0 +1,26 @@
+.pagination{
+  display:flex;
+  justify-content: center;
+  width: 80%;
+  margin: 10px auto;
+  margin-bottom: 20px;
+}
+.break-me{
+  margin:auto 5px;
+  list-style: none;
+}
+.page{
+  padding:5px 10px;
+  margin: auto 0;
+  font-size: 1rem;
+  list-style: none;
+  background:#F0FEFE;
+}
+.active{
+  background:lightblue;
+}
+.previous,  .next{
+  list-style: none;
+  margin: auto 10px;
+  font-size: 1rem;
+}
