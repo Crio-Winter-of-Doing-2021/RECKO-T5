@@ -40,13 +40,11 @@ const LoginForm: React.FC = () => {
       setLoading(false);
       return router.replace("/");
     }catch(e){
-      console.log(e.response.data.error)
-
+      // console.log(e?.response?.data?.error || e)
       setLoading(false);
-
       toast({
         title: "Error",
-        description: e.response.data.error,
+        description: e?.response?.data?.error || e.message,
         status: "error",
         duration: 5000,
         isClosable: true,

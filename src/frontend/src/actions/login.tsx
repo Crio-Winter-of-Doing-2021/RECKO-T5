@@ -16,7 +16,7 @@ export const login = async (dispatch:any, details:any) => {
     console.log(e);
     dispatch({
       type: ACTIONS.LOGIN,
-      payload: { user: null, error: e.response.data.error },
+      payload: { user: null, error: e?.response?.data?.error || e.message },
     });
     throw e
   }
