@@ -1,5 +1,0 @@
-apis to be consumed : 
-1. journal and manual journals
-2. accounts
-3. contacts => invoices => payments
-4. employees
