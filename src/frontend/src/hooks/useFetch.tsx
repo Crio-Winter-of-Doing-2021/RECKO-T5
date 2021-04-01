@@ -26,6 +26,7 @@ const useFetch: any = ({url, headers, method, body }:useFetchProps) => {
           data:body,
           method,
           baseURL:baseUrl,
+          withCredentials: true
         })
         setState(response.data)
         setError(null)
@@ -33,7 +34,7 @@ const useFetch: any = ({url, headers, method, body }:useFetchProps) => {
       catch(e){
         console.log(e)
         setState(null)
-        setError(e.message)
+        setError(e)
       }
       finally{
         setLoading(false)

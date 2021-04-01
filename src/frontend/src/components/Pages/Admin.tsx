@@ -5,7 +5,7 @@ import Error from "../Error"
 import Loading from "../Loading"
 
 export interface AdminPageProps {
-  
+    
 }
  
 const AdminPage: React.FC<AdminPageProps> = () => {

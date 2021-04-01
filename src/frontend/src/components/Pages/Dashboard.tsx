@@ -68,8 +68,8 @@ const DashBoard: React.FC<DashBoardProps> = () => {
   }, [state])
 
   if(error) {
-    console.log(error)
-    return <Error error={error} />
+    // console.log(error.response.data.error)
+    return <Error error={error.response.data.error} />
   }
   if(loading){
     return <Loading />
