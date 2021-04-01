@@ -8,7 +8,8 @@ const getAllJournals = async () => {
   try {
     await setXeroTokenSet()
     // sends the journal created/modified after 1980
-    const response = await xero.accountingApi.getJournals(xeroTenantId, new Date("1980"));
+    const tenants = await xero.updateTenants()
+    const response = await xero.accountingApi.getJournals(tenants[0].tenantId, new Date("1980"));
     const journals = response.body.journals
     const mappedData = []
     journals.map(journal => {
