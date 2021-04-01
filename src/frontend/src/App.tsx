@@ -6,9 +6,10 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-
+import ProtectedRoute from './components/ProtectedRoute'
 import AdminPage from './components/Pages/Admin';
 import JournalDataContextProvider from './context/journalDataProvider';
+import UserContextProvider from './context/userContextProvider';
 import { ChakraProvider } from "@chakra-ui/react"
 import LoginPage from './components/Pages/Login';
 import RegisterPage from './components/Pages/Register';
@@ -19,13 +20,15 @@ function App() {
       <Switch>
       <ChakraProvider>
         <JournalDataContextProvider>
-          <div className="App">
-            <Navbar />
-            <Route path="/" exact component={DashBoard} />
-            <Route path="/admin" component={AdminPage} />
-            <Route path="/login" component={LoginPage} />
-            <Route path="/register" component={RegisterPage} />
-          </div>
+          <UserContextProvider>
+            <div className="App">
+              <Navbar />
+              <ProtectedRoute path="/" component={DashBoard} />
+              <ProtectedRoute path="/admin" component={AdminPage} />
+              <Route path="/login" component={LoginPage} />
+              <Route path="/register" component={RegisterPage} />
+            </div>
+          </UserContextProvider>
         </JournalDataContextProvider>
         </ChakraProvider>
       </Switch>

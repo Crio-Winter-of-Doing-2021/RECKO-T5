@@ -1,43 +1,50 @@
 import {FormControl, FormLabel, Input, Button, Box, Heading, useToast} from '@chakra-ui/react'
-// import useFetch from '../../hooks/useFetch'
-import {useState} from 'react'
-import {HTTP} from '../../utils'
+import { UserContext } from "../../context/userContextProvider";
+import { useState, useContext } from "react";
+import { login } from "../../actions/login";
+import { useHistory } from "react-router-dom";
+
+
 export interface LoginFormProps {
   email:string
   password:string
 }
  
 const LoginForm: React.FC = () => {
+  const router = useHistory()
+  const {dispatch} = useContext(UserContext)
+
+  const [loading, setLoading] = useState<boolean>(false);
+
   const toast = useToast()
   const [formData, setFormData] = useState<LoginFormProps>({
     email:"",
     password:""
   })
   
-  // const {state, error, loading} = useFetch({
-  //   url:"/register",
-  //   headers:{
-  //     ContentType:"application/json"
-  //   },
-  //   method:"POST",
-  //   body: formData
-  // })
+  
   const onSubmitHandler = async (e:React.FormEvent<HTMLFormElement>) => {
     // post the data using axios.
     e.preventDefault()
+
+    setLoading(true);
     try{
-      const response = await HTTP({url:"/login", headers:null, body:formData, method:"POST"})
-      console.log(response)
-      return toast({
+      await login(dispatch, formData);
+      toast({
         title: "Logged In.",
         // description: response.message,
         status: "success",
         duration: 5000,
         isClosable: true,
       })
+      setLoading(false);
+      return router.replace("/");
     }catch(e){
       console.log(e.response.data.error)
-      return toast({
+
+      setLoading(false);
+
+      toast({
         title: "Error",
         description: e.response.data.error,
         status: "error",
@@ -45,6 +52,7 @@ const LoginForm: React.FC = () => {
         isClosable: true,
       })
     }
+    
   }
   const onChangeHandler = (e:any) => {
     setFormData((prev) => {
@@ -66,6 +74,7 @@ const LoginForm: React.FC = () => {
         <Button
         mt={4}
         colorScheme="teal"
+        isLoading={loading}
         // isLoading={props.isSubmitting}
         type="submit">Submit</Button>
       </FormControl>

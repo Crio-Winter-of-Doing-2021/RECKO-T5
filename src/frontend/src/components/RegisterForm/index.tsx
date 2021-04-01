@@ -41,7 +41,6 @@ const RegisterForm: React.FC = () => {
         isClosable: true,
       })
     }
-    console.log("submitted", formData)
   }
   const onChangeHandler = (e:any) => {
     setFormData((prev) => {

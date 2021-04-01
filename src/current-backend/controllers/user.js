@@ -75,7 +75,7 @@ class UserController{
           maxAge: OneDayInSec * 1000,
           ...cookieConfig,
         });
-        res.status(200).json({_id: user._id})
+        res.status(200).json({user: user._id})
       }else{
         res.status(404).json({error:"user not found"})
         return;
