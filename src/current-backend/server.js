@@ -23,6 +23,9 @@ const Scheduler = require('./scheduled_jobs')
 Scheduler()
 
 // middleware
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
+
 // cookies
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Credentials", true);
@@ -45,10 +48,12 @@ app.use(
   })
 );
 app.set("trust proxy", 1);
-app.use(cookieParser()); 
-app.use(express.json())
-app.use(express.urlencoded({extended:true}))
-
+app.use(cookieParser());
+// logging the cookies of request
+app.use(function(req, res, next){
+  console.log(req.cookies)
+  next()
+})
 
 // main API 
 app.use('/', API)

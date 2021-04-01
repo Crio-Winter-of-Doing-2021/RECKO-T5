@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import axios from 'axios'
-
+import {baseUrl} from '../constants'
 
 export interface useFetchProps {
   url: string
@@ -25,7 +25,7 @@ const useFetch: any = ({url, headers, method, body }:useFetchProps) => {
           headers,
           data:body,
           method,
-          baseURL:"http://localhost:5000/api",
+          baseURL:baseUrl,
         })
         setState(response.data)
         setError(null)

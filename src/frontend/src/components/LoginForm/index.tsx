@@ -1,13 +1,14 @@
-import {FormControl, FormLabel, Input, Button, Box, Heading} from '@chakra-ui/react'
+import {FormControl, FormLabel, Input, Button, Box, Heading, useToast} from '@chakra-ui/react'
 // import useFetch from '../../hooks/useFetch'
 import {useState} from 'react'
-
+import {HTTP} from '../../utils'
 export interface LoginFormProps {
   email:string
   password:string
 }
  
 const LoginForm: React.FC = () => {
+  const toast = useToast()
   const [formData, setFormData] = useState<LoginFormProps>({
     email:"",
     password:""
@@ -21,10 +22,29 @@ const LoginForm: React.FC = () => {
   //   method:"POST",
   //   body: formData
   // })
-  const onSubmitHandler = (e:React.FormEvent<HTMLFormElement>) => {
+  const onSubmitHandler = async (e:React.FormEvent<HTMLFormElement>) => {
     // post the data using axios.
     e.preventDefault()
-    console.log("submitted", formData)
+    try{
+      const response = await HTTP({url:"/login", headers:null, body:formData, method:"POST"})
+      console.log(response)
+      return toast({
+        title: "Logged In.",
+        // description: response.message,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      })
+    }catch(e){
+      console.log(e.response.data.error)
+      return toast({
+        title: "Error",
+        description: e.response.data.error,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      })
+    }
   }
   const onChangeHandler = (e:any) => {
     setFormData((prev) => {

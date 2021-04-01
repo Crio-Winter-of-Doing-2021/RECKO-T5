@@ -1,6 +1,6 @@
-import {FormControl, FormLabel, Input, RadioGroup, Radio, Button, Box, Heading} from '@chakra-ui/react'
-// import useFetch from '../../hooks/useFetch'
+import {FormControl, FormLabel, Input, RadioGroup, Radio, Button, Box, Heading, useToast} from '@chakra-ui/react'
 import {useState} from 'react'
+import {HTTP} from '../../utils'
 
 export interface RegisterFormProps {
   name:string
@@ -10,6 +10,7 @@ export interface RegisterFormProps {
 }
  
 const RegisterForm: React.FC = () => {
+  const toast = useToast()
   const [formData, setFormData] = useState<RegisterFormProps>({
     name:"",
     email:"",
@@ -17,17 +18,29 @@ const RegisterForm: React.FC = () => {
     admin:false
   })
 
-  // const {state, error, loading} = useFetch({
-  //   url:"/register",
-  //   headers:{
-  //     ContentType:"application/json"
-  //   },
-  //   method:"POST",
-  //   body: formData
-  // })
-  const onSubmitHandler = (e:React.FormEvent<HTMLFormElement>) => {
+  const onSubmitHandler = async (e:React.FormEvent<HTMLFormElement>) => {
     // post the data using axios.
     e.preventDefault()
+    try{
+      const response = await HTTP({url:"/register", headers:null, body:formData, method:"POST"})
+      console.log(response.message)
+      return toast({
+        title: "Account created.",
+        description: response.message,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      })
+    }catch(e){
+      console.log(e.response.data.error)
+      return toast({
+        title: "Error",
+        description: e.response.data.error,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      })
+    }
     console.log("submitted", formData)
   }
   const onChangeHandler = (e:any) => {
