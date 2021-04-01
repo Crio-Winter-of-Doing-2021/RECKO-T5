@@ -3,14 +3,13 @@ import Error from '../Error'
 import Loading from '../Loading'
 import SortingBox from '../SortingBox'
 import FilterBox from '../FilterBox'
-
 import {sortAsc, sortDsc} from '../../utils'
 import { AccountRowProps } from '../AccountRow'
 import  {journalDataContext} from '../../context/journalDataProvider'
 
 import {useContext, useEffect, useState} from 'react'
 import useFetch from '../../hooks/useFetch'
-
+import Pagination from '../Pagination'
 
 export interface DashBoardProps {
   
@@ -42,15 +41,21 @@ const DashBoard: React.FC<DashBoardProps> = () => {
   const onRadioChangeHandler = (value : "ALL" | "XERO" | "QUICKBOOKS") => {
     setRadioValue(value)
     if(value!=="ALL"){
-      let filteredData = state.filter((d:AccountRowProps) => d.provider === value)
+      let filteredData = state.journals.filter((d:AccountRowProps) => d.provider === value)
       setData(filteredData)
     }else{
-      setData(state)
+      setData(state.journals)
     }
   }
+
+  // Pagination params
+  const [page, setPage] = useState<number>(0)
+  const [totalPages, setTotalPages] = useState<number>(0)
+  const journalsPerPage = 40
+ 
   // API CALL
-  const {state, loading, error} = useFetch({
-    url:"/journal",
+  const {state, loading, error, refetch} = useFetch({
+    url:`/journal?limit=${journalsPerPage}&offset=${page*journalsPerPage}`,
     headers:{
       "Content-type":"application/json"
     },
@@ -60,16 +65,33 @@ const DashBoard: React.FC<DashBoardProps> = () => {
   // calling hook to set the data value when we get state from api call
   useEffect(()=>{
     if(state){
-      setData(state)
+      console.log(state)
+      setData(state.journals)
+      let tp = (state.numberOfJournals)/journalsPerPage
+      // setting total pages to be created for pagination
+      setTotalPages(tp)
       // setting context data
-      setJournals(state)
+      setJournals(state.journals)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state])
 
+
+  // PAGINATION HANDLERS
+  // refetch when page changes
+  useEffect(()=>{
+    console.log(page)
+    refetch()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page])
+  const handlePageClick = (selectedItem: { selected: number }) => {
+    setPage(selectedItem.selected)
+    // console.log(selectedItem.selected)
+  }
+
   if(error) {
-    // console.log(error.response.data.error)
-    return <Error error={error.response.data.error} />
+    console.log(error?.response?.data?.error)
+    return <Error error={error?.response?.data?.error ?? "err...."} />
   }
   if(loading){
     return <Loading />
@@ -83,7 +105,7 @@ const DashBoard: React.FC<DashBoardProps> = () => {
       data.sort(sortDsc(sortBy.property))
     }
   }
-
+  
   return (
       <>
         <FilterBox onRadioChangeHandler={onRadioChangeHandler} radioValue={radioValue} />
@@ -91,6 +113,7 @@ const DashBoard: React.FC<DashBoardProps> = () => {
         <AccountTable 
           accounts = {data}
         />
+       <Pagination page={page} totalPages={totalPages} handlePageClick={handlePageClick}/>
       </>
     );
 }

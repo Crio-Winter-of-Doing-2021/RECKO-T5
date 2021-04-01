@@ -47,7 +47,7 @@ const useFetch: any = ({url, headers, method, body }:useFetchProps) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return ({state,error,loading});
+  return ({state,error,loading, refetch:callAPI});
 }
  
 export default useFetch;

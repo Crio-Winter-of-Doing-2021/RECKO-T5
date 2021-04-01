@@ -1,9 +1,16 @@
 const Journal = require('../models/journal')
 
-const queryJournals = async (params) => {
+const queryJournals = async (query) => {
   try{
-    const journals = await Journal.find(params)
-    return journals
+    const {limit, offset} = query
+    const journals = Journal.find().limit(parseInt(limit)).skip(parseInt(offset))
+    const totalNumber = Journal.countDocuments()
+    return Promise.all([journals, totalNumber]).then((vals) => {
+      return ({
+        journals:vals[0],
+        numberOfJournals:vals[1]
+      })
+    })
   }catch(e){
     console.log(e)  
     throw e
@@ -12,8 +19,9 @@ const queryJournals = async (params) => {
 class JournalController{
   async getJournals(req, res){
     try{
-      const {params} = req 
-      const journals = await queryJournals(params)
+      const {query} = req 
+      // console.log(query)
+      const journals = await queryJournals(query)
       res.send(journals)
     }catch(e){
       console.log(e)

@@ -1,5 +1,6 @@
 .navbar{
   width: 100%;
+  min-width: 100%;
   padding:14px 20px;
   background-color: azure;
   display: flex;
