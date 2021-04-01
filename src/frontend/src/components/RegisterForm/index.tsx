@@ -32,10 +32,10 @@ const RegisterForm: React.FC = () => {
         isClosable: true,
       })
     }catch(e){
-      console.log(e.response.data.error)
+      console.log(e)
       return toast({
         title: "Error",
-        description: e.response.data.error,
+        description: e?.response?.data?.error || e.message,
         status: "error",
         duration: 5000,
         isClosable: true,

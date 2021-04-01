@@ -15,7 +15,7 @@ const AdminPage: React.FC<AdminPageProps> = () => {
   })
   if(error) {
     // console.log(error.response.data.error)
-    return <Error error={error.response.data.error} />
+    return <Error error={error?.response?.data?.error || error.message} />
   }
   if(loading){
     return <Loading />
