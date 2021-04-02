@@ -1,10 +1,12 @@
 .navbar{
   width: 100%;
   min-width: 100%;
-  padding:14px 20px;
+  padding:10px 20px;
+  margin: auto;
   background-color: azure;
   display: flex;
   justify-content: space-between;
+  height:60px;
 }
 
 .navbar-options{
@@ -20,4 +22,48 @@
   display: inline;
   font-size: 1.5rem;
   font-weight: 600;
+}
+
+.navbar-burger, 
+.navbar-dropdown{
+  display: none;
+}
+
+
+
+@media screen and (max-width:600px){
+  .navbar-burger{
+    display: block;
+    margin: auto 0;
+    font-weight: 600;
+  }
+  .navbar-dropdown{
+    display: block;
+  }
+  .navbar-options{
+    display: none;
+  }
+  .navbar-dropdown{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top:60px;
+    right:0;
+    width: 100%;
+    margin: auto 0;
+    background: #C6F4F4;
+    z-index: 1;
+    text-align: center;
+    font-size: 1rem;
+  }
+  .navbar-dropdown p { 
+    padding: 5px;
+  }
+  .navbar-dropdown p:hover{
+    background-color: skyblue;
+  }
+}
+
+.hidden{
+  display: none;
 }
