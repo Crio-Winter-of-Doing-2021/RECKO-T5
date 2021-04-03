@@ -24,12 +24,14 @@ const Navbar: React.FC<NavbarProps> = () => {
 
   const showDemographButton:boolean = currentPath === "/" 
   const showLogoutButton:boolean = state.user ? true:false 
+
   const getNavLinks = () => {
     if((currentPath === "/login" || currentPath === "/register") && showLogoutButton){
       return {navLink: "/", navLinkName:"Dashboard"}
     }
     switch(currentPath){
       case "/admin":
+      case "/account":
         return {navLink: "/", navLinkName:"Dashboard"}
       case "/":
         return {navLink:"/admin", navLinkName:"Admin"}
@@ -55,6 +57,8 @@ const Navbar: React.FC<NavbarProps> = () => {
           <h6><Link to={navLink}>{navLinkName}</Link></h6>}
         {showLogoutButton &&
           <h6><Link to={navLink}>{navLinkName}</Link></h6>}
+        {showLogoutButton &&
+        <h6><Link to={'/account'}>Accounts</Link></h6>}
         {showDemographButton && <Button margin="auto 5px" d="inline" colorScheme="teal" onClick={onOpen}>
           Demographs
         </Button>}
@@ -78,6 +82,8 @@ const Navbar: React.FC<NavbarProps> = () => {
           <p><Link to={navLink}>{navLinkName}</Link></p>}
         {showLogoutButton &&
           <p><Link to={navLink}>{navLinkName}</Link></p>}
+        {showLogoutButton &&
+        <p><Link to={'/account'}>Accounts</Link></p>}
         {showDemographButton && <p onClick={onOpen}>
           Demographs
         </p>}

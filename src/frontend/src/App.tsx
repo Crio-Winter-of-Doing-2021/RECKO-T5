@@ -13,6 +13,7 @@ import UserContextProvider from './context/userContextProvider';
 import { ChakraProvider } from "@chakra-ui/react"
 import LoginPage from './components/Pages/Login';
 import RegisterPage from './components/Pages/Register';
+import AccountPage from './components/Pages/Account';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               <Navbar />
               <ProtectedRoute path="/" component={DashBoard} />
               <ProtectedRoute path="/admin" component={AdminPage} />
+              <ProtectedRoute path="/account" component={AccountPage} />
               <Route path="/login" component={LoginPage} />
               <Route path="/register" component={RegisterPage} />
             </div>

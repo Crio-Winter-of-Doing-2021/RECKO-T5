@@ -1,30 +1,23 @@
-import { Tag, TagLabel, Tr, Td } from "@chakra-ui/react"
-// import './style.css'
+import { Tr, Td } from "@chakra-ui/react"
+
 
 export interface AccountRowProps {
-  _id ?: string,
-  accountName : string,
-  accountId : string,
-  amount : number,
-  date : string,
-  type : "DEBIT" | "CREDIT"
+  _id ?: string
+  aid : string
+  name : string
+  type : string
+  class : string
   provider : string
 }
  
-const AccountRow: React.FC<AccountRowProps> = ({provider, accountName, accountId, amount, date, type}) => {
-  const ColorOfTag : string = type.toUpperCase() === "CREDIT" ? "green" : "red"
+const AccountRow: React.FC<AccountRowProps> = (acc) => {
   return (
         <Tr>
-          <Td>{provider}</Td>
-          <Td>{new Date(date).toLocaleDateString()}</Td>
-          <Td>{accountName}</Td>
-          <Td>{accountId}</Td>
-          <Td>
-          <Tag size="md" colorScheme={ColorOfTag} borderRadius="full">
-            <TagLabel>{type}</TagLabel>  
-          </Tag>
-          </Td>
-          <Td isNumeric>{Math.abs(amount)}</Td>
+          <Td>{acc.provider}</Td>
+          <Td>{acc.name}</Td>
+          <Td>{acc.type}</Td>
+          <Td>{acc.aid}</Td>
+          <Td>{acc.class}</Td>
         </Tr>
   );
 }

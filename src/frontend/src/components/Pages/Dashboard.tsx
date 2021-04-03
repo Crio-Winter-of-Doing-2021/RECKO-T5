@@ -1,10 +1,10 @@
-import AccountTable from '../AccountTable'
+import JournalTable from '../JournalTable'
 import Error from '../Error'
 import Loading from '../Loading'
 import SortingBox from '../SortingBox'
 import FilterBox from '../FilterBox'
 import {sortAsc, sortDsc} from '../../utils'
-import { AccountRowProps } from '../AccountRow'
+import { JournalRowProps } from '../JournalRow'
 import  {journalDataContext} from '../../context/journalDataProvider'
 
 import {useContext, useEffect, useState} from 'react'
@@ -28,7 +28,7 @@ const DashBoard: React.FC<DashBoardProps> = () => {
     trend:"ascending"
   })
   // main data to be displayed
-  const [data, setData] = useState<Array<AccountRowProps>>([])
+  const [data, setData] = useState<Array<JournalRowProps>>([])
   // radio button values to filter the data
   const [radioValue, setRadioValue] = useState<"ALL" | "XERO" | "QUICKBOOKS">("ALL")
 
@@ -41,7 +41,7 @@ const DashBoard: React.FC<DashBoardProps> = () => {
   const onRadioChangeHandler = (value : "ALL" | "XERO" | "QUICKBOOKS") => {
     setRadioValue(value)
     if(value!=="ALL"){
-      let filteredData = state.journals.filter((d:AccountRowProps) => d.provider === value)
+      let filteredData = state.journals.filter((d:JournalRowProps) => d.provider === value)
       setData(filteredData)
     }else{
       setData(state.journals)
@@ -110,7 +110,7 @@ const DashBoard: React.FC<DashBoardProps> = () => {
       <>
         <FilterBox onRadioChangeHandler={onRadioChangeHandler} radioValue={radioValue} />
         <SortingBox onChangeHandler = {onChangeHandler} />
-        <AccountTable 
+        <JournalTable 
           accounts = {data}
         />
        <Pagination page={page} totalPages={totalPages} handlePageClick={handlePageClick}/>

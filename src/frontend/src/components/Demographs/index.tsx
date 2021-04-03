@@ -1,14 +1,14 @@
 import { Bar, Doughnut } from 'react-chartjs-2';
 import {journalDataContext} from '../../context/journalDataProvider'
 import {useContext} from 'react'
-import {AccountRowProps} from '../AccountRow'
+import {JournalRowProps} from '../JournalRow'
 
 
 
  const Demographs: React.FC<any> = () => {
    const {journals} = useContext(journalDataContext)
    // find no of type of credits and debits
-   const creditTypes = journals.filter((journal: AccountRowProps) => journal.type === "CREDIT")
+   const creditTypes = journals.filter((journal: JournalRowProps) => journal.type === "CREDIT")
 
    const doughnutData = {
     labels: ["CREDIT", "DEBIT"],
@@ -32,7 +32,7 @@ import {AccountRowProps} from '../AccountRow'
 
   const months:any = {}
 
-  journals.forEach((j:AccountRowProps) => {
+  journals.forEach((j:JournalRowProps) => {
     let date:string = new Date(j.date).toLocaleDateString().substring(3)
     if(months[date]){
       if(j.type === "CREDIT") months[date].credit++
