@@ -1,4 +1,4 @@
-import AccountRow, {AccountRowProps} from "../AccountRow";
+import JournalRow, {JournalRowProps} from "../JournalRow";
 
 
 import {
@@ -11,12 +11,12 @@ import {
 } from "@chakra-ui/react"
 
 
-export interface AccountTableProps{
-  accounts : Array<AccountRowProps> 
+export interface JournalTableProps{
+  accounts : Array<JournalRowProps> 
 }
 
 
-const AccountTable : React.FC<AccountTableProps> = ({accounts}) => {
+const JournalTable : React.FC<JournalTableProps> = ({accounts}) => {
   return (
     <div style= {{overflowX : "scroll"}}>
     <Table variant="simple">
@@ -34,7 +34,7 @@ const AccountTable : React.FC<AccountTableProps> = ({accounts}) => {
         <Tbody>
         {
           accounts.map((acc) => {
-            return <AccountRow 
+            return <JournalRow 
                     key = {acc._id}
                     provider={acc.provider}
                     accountName = {acc.accountName}
@@ -52,4 +52,4 @@ const AccountTable : React.FC<AccountTableProps> = ({accounts}) => {
  
 }
 
-export default AccountTable;
+export default JournalTable;
