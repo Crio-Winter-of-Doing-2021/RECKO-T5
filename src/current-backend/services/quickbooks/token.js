@@ -17,6 +17,7 @@ const refreshQuickBooksTokenSet = async (tokenSet) => {
     return authResponse.token
   }catch(e){
     console.error('The error message is :' + e.originalMessage);
+    console.log("reauthorize quickbooks!")
     throw e
   }
   
