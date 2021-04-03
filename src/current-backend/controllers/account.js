@@ -3,9 +3,10 @@ const QUICKBOOKS = require('../services/quickbooks')
 const XERO = require('../services/xero')
 
 
-const queryAccounts = async (params) => {
+const queryAccounts = async (query) => {
+  const {limit, offset} = query
   try{
-    const accounts = await Account.find(params)
+    const accounts = await Account.find().limit(parseInt(limit)).skip(parseInt(offset))
     return accounts
   }catch(e){
     console.log(e)  
@@ -15,8 +16,8 @@ const queryAccounts = async (params) => {
 class AccountController{
   async getAccounts(req, res){
     try{
-      const {params} = req 
-      const accounts = await queryAccounts(params)
+      const {query} = req 
+      const accounts = await queryAccounts(query)
       res.send(accounts)
     }catch(e){
       console.log(e)
