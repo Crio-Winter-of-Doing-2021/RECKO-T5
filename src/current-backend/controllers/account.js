@@ -6,7 +6,7 @@ const XERO = require('../services/xero')
 const queryAccounts = async (query) => {
   try{
     const {limit, offset} = query
-    const accounts = Account.find().limit(parseInt(limit)).skip(parseInt(offset))
+    const accounts = Account.find().limit(parseInt(limit)).skip(parseInt(offset)).sort({$natural:-1})
     const totalNumber = Account.countDocuments()
     return Promise.all([accounts, totalNumber]).then((vals) => {
       return ({
@@ -43,7 +43,7 @@ class AccountController{
           res.send(acc)
           return
         }catch(e){
-          res.status(e.response.statusCode).json({error:e.response.body.Elements[0].ValidationErrors[0].Message})
+          res.status(400).json({error:e.response.body.Elements[0].ValidationErrors[0].Message})
         }
       }
       else if(provider === "QUICKBOOKS"){
@@ -64,7 +64,7 @@ class AccountController{
         return;
       }
     }catch(e){
-      console.log(e)
+      // console.log(e)
       res.status(400).json({error:e})
     }
   }

@@ -13,7 +13,7 @@ const getAllAccounts = async () => {
     const accountsGetResponse = await xero.accountingApi.getAccounts(tenants[0].tenantId);
     const accounts = accountsGetResponse.response.body.Accounts
     const mappedData = accounts.map((acc) => ({
-      aid:acc.AccountID,
+      aid:acc.Code,
       name:acc.Name,
       active:acc.Status === "ACTIVE",
       class: acc.Class,
@@ -36,21 +36,21 @@ const getAnAccount = async (id) => {
     throw e
   }
 }
-const createAccount = async ({name, code, type, bankAccountNumber, hasAttachments}) => {
+const createAccount = async ({name, code, type, bankAccountNumber}) => {
   try{
     await setXeroTokenSet()
 
     if(type === AccountType.BANK && !bankAccountNumber){
       throw new Error("bank account number is required for account of type BANK")
     }
-    const account = { name, code, type, bankAccountNumber, hasAttachments};
+    const account = { name, code, type, bankAccountNumber, hasAttachments:true};
     const tenants = await xero.updateTenants()
 
     const accountCreateResponse = await xero.accountingApi.createAccount(tenants[0].tenantId, account);
     const acc = accountCreateResponse.body.accounts[0];
     console.log(acc)
     const mappedData = {
-      aid:acc.accountID,
+      aid:acc.Code,
       name:acc.name,
       active:acc.status === "ACTIVE",
       class: acc.class,
