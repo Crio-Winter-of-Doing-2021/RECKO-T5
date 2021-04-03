@@ -6,6 +6,7 @@ import { AccountRowProps } from '../AccountRow'
 import {useEffect, useState} from 'react'
 import useFetch from '../../hooks/useFetch'
 import Pagination from '../Pagination'
+import AddAccountForm from '../AddAccountForm'
 
 
 export interface AccountPageProps {
@@ -63,6 +64,7 @@ const AccountPage: React.FC<AccountPageProps> = () => {
   return (
       <>  
        {/* Create a button to create new accounts and a form to resolve that */}
+        <AddAccountForm />
         <AccountTable 
           accounts = {data}
         />
