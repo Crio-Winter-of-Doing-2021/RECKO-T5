@@ -44,9 +44,20 @@ const createAccount = async ({name, code, type, bankAccountNumber, hasAttachment
       throw new Error("bank account number is required for account of type BANK")
     }
     const account = { name, code, type, bankAccountNumber, hasAttachments};
-    const accountCreateResponse = await xero.accountingApi.createAccount(xeroTenantId, account);
-    const accountId = accountCreateResponse.body.accounts[0].accountID;
-    return accountId
+    const tenants = await xero.updateTenants()
+
+    const accountCreateResponse = await xero.accountingApi.createAccount(tenants[0].tenantId, account);
+    const acc = accountCreateResponse.body.accounts[0];
+    console.log(acc)
+    const mappedData = {
+      aid:acc.accountID,
+      name:acc.name,
+      active:acc.status === "ACTIVE",
+      class: acc.class,
+      type:acc.type,
+      provider:"XERO"
+    }
+    return mappedData
   }catch(e){
     console.log(e)
     throw e
