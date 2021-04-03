@@ -4,10 +4,16 @@ const XERO = require('../services/xero')
 
 
 const queryAccounts = async (query) => {
-  const {limit, offset} = query
   try{
-    const accounts = await Account.find().limit(parseInt(limit)).skip(parseInt(offset))
-    return accounts
+    const {limit, offset} = query
+    const accounts = Account.find().limit(parseInt(limit)).skip(parseInt(offset))
+    const totalNumber = Account.countDocuments()
+    return Promise.all([accounts, totalNumber]).then((vals) => {
+      return ({
+        accounts:vals[0],
+        numberOfAccounts:vals[1]
+      })
+    })
   }catch(e){
     console.log(e)  
     throw e

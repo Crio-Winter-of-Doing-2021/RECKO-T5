@@ -1,7 +1,7 @@
-import AccountTable from '../JournalTable'
+import AccountTable from '../AccountTable'
 import Error from '../Error'
 import Loading from '../Loading'
-import { JournalRowProps } from '../JournalRow'
+import { AccountRowProps } from '../AccountRow'
 
 import {useEffect, useState} from 'react'
 import useFetch from '../../hooks/useFetch'
@@ -13,7 +13,7 @@ export interface AccountPageProps {
 }
  
 const AccountPage: React.FC<AccountPageProps> = () => {
-  const [data, setData] = useState<Array<JournalRowProps>>([])
+  const [data, setData] = useState<Array<AccountRowProps>>([])
   // Pagination params
   const [page, setPage] = useState<number>(0)
   const [totalPages, setTotalPages] = useState<number>(0)
@@ -21,7 +21,7 @@ const AccountPage: React.FC<AccountPageProps> = () => {
 
    // API CALL
    const {state, loading, error, refetch} = useFetch({
-    url:`/journal?limit=${accountPerPage}&offset=${page*accountPerPage}`,
+    url:`/account?limit=${accountPerPage}&offset=${page*accountPerPage}`,
     headers:{
       "Content-type":"application/json"
     },
@@ -32,8 +32,8 @@ const AccountPage: React.FC<AccountPageProps> = () => {
   useEffect(()=>{
     if(state){
       console.log(state)
-      setData(state.journals)
-      let tp = (state.numberOfJournals)/accountPerPage
+      setData(state.accounts)
+      let tp = (state.numberOfAccounts)/accountPerPage
       // setting total pages to be created for pagination
       setTotalPages(tp)
     }
@@ -62,6 +62,7 @@ const AccountPage: React.FC<AccountPageProps> = () => {
   }
   return (
       <>  
+       {/* Create a button to create new accounts and a form to resolve that */}
         <AccountTable 
           accounts = {data}
         />
