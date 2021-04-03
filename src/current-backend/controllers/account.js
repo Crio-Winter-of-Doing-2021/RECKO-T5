@@ -38,6 +38,8 @@ class AccountController{
         try{
           const acc = await XERO.createAccount(account)
           // if success store the account in db
+          const newAcc = new Account(acc)
+          await newAcc.save()
           res.send(acc)
           return
         }catch(e){
@@ -48,6 +50,8 @@ class AccountController{
         try{
           const acc = await QUICKBOOKS.createAccount(account) 
           // if success store the account in db
+          const newAcc = new Account(acc)
+          await newAcc.save()
           res.send(acc)
           return
         }catch(e){

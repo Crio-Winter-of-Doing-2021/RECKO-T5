@@ -8,8 +8,7 @@ import {
   ModalCloseButton,
   Button,
   Input,
-  useDisclosure,
-  TagCloseButton
+  useDisclosure
 } from "@chakra-ui/react"
 import {useState} from 'react'
 
