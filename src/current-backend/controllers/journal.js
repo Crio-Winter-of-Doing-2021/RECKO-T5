@@ -21,21 +21,21 @@ const queryJournals = async (query) => {
 }
 
 // gets the journals directly via xero and quickbooks api
-const queryJournalsV2 = async () => {
+const queryJournalsV2 = async (uid) => {
   try{
-    const {user} = req
     // get the tokenSet from table using user._id
     // and pass the token Set in getAllJournal function V2
-    const xero_journals = XERO.getAllJournals()
-    const quickbooks_journals = QUICKBOOKS.getAllJournals()
+    const xero_journals =  XERO.getAllJournals(uid)
+    const quickbooks_journals = QUICKBOOKS.getAllJournals(uid)
     return Promise.all([xero_journals, quickbooks_journals]).then(values => {
       return {
         journals : [...values[0], ...values[1]]
       }
     })
+    
   }catch(e){
-    console.log(e)
     // send the data through db in case of error
+    throw e
   }
   
 }
@@ -53,12 +53,13 @@ class JournalController{
   }
   async getJournalsV2(req, res){
     try{
-      const {query} = req 
+      // const {query} = req 
+      const {user} = req
       // console.log(query)
-      const journals = await queryJournalsV2()
+      const journals = await queryJournalsV2(user._id)
       res.send(journals)
     }catch(e){
-      console.log(e)
+      console.log(e.message)
       res.status(400).json({error:e})
     }
   }

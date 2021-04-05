@@ -1,9 +1,10 @@
 const router = require('express').Router()
 const OAuthController = require('../controllers/oauth')
+const {isUserLoggedIn} = require('../middleware/user')
 
-router.get('/xero', OAuthController.XeroAuthorization)
-router.get('/xero/callback', OAuthController.XeroCallbackHandler)
-router.get('/quickbooks', OAuthController.QuickBooksAuthorization)
-router.get('/quickbooks/callback', OAuthController.QuickBooksCallbackHandler)
+router.get('/xero',isUserLoggedIn, OAuthController.XeroAuthorization)
+router.get('/xero/callback',isUserLoggedIn, OAuthController.XeroCallbackHandler)
+router.get('/quickbooks',isUserLoggedIn, OAuthController.QuickBooksAuthorization)
+router.get('/quickbooks/callback',isUserLoggedIn, OAuthController.QuickBooksCallbackHandler)
 
 module.exports = router

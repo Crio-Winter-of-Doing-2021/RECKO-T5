@@ -13,7 +13,6 @@ const TokenSetSchema = new mongoose.Schema({
     type:ObjectId,
     ref:"User",
     required:[true, "Token Set must be associated to some user"],
-    unique:[true, "user must have a unique access token"]
   }
 })
 
