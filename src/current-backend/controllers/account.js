@@ -19,6 +19,20 @@ const queryAccounts = async (query) => {
     throw e
   }
 }
+const queryAccountsV2 = async (uid) => {
+  try{
+    const xero_acc = XERO.getAllAccounts(uid)
+    const quickbook_acc = QUICKBOOKS.getAllAccounts(uid)
+    return Promise.all([xero_acc, quickbook_acc]).then((values) => {
+      return {
+        accounts:[...values[0], ...values[1]]
+      }
+    })
+  }catch(e){
+    console.log(e)  
+    throw e
+  }
+}
 class AccountController{
   async getAccounts(req, res){
     try{
@@ -30,13 +44,24 @@ class AccountController{
       res.status(400).json({error:e})
     }
   }
+  async getAccountsV2(req, res){
+    try{
+      const {user} = req
+      const accounts = await queryAccountsV2(user._id)
+      res.send(accounts)
+    }catch(e){
+      console.log(e)
+      res.status(400).json({error:e})
+    }
+  }
   async createAccount(req, res){
     try{
       const account = req.body
       const {provider} = req.query 
+      const {user} = req;
       if(provider === "XERO"){
         try{
-          const acc = await XERO.createAccount(account)
+          const acc = await XERO.createAccount(account, user._id)
           // if success store the account in db
           const newAcc = new Account(acc)
           await newAcc.save()
@@ -48,7 +73,7 @@ class AccountController{
       }
       else if(provider === "QUICKBOOKS"){
         try{
-          const acc = await QUICKBOOKS.createAccount(account) 
+          const acc = await QUICKBOOKS.createAccount(account, user._id) 
           // if success store the account in db
           const newAcc = new Account(acc)
           await newAcc.save()

@@ -4,9 +4,9 @@ const oauthClient = require('../quickbooks-ouath-client/index')
 
 
 
-const getAllAccounts = async () => {
+const getAllAccounts = async (uid) => {
   try{
-    await setQuickBooksTokenSet()
+    await setQuickBooksTokenSet(uid)
     const {access_token, refresh_token} = oauthClient.getToken()
     // await refreshQuickBooksTokenSet(oauthClient.getToken())
     const qbo = getQuickBooksClient(access_token, refresh_token)
@@ -37,9 +37,9 @@ const getAllAccounts = async () => {
   }
 }
 
-const createAccount = async (account) => {
+const createAccount = async (account, uid) => {
   try{
-    await setQuickBooksTokenSet()
+    await setQuickBooksTokenSet(uid)
     const {access_token, refresh_token} = oauthClient.getToken()
     // await refreshQuickBooksTokenSet(oauthClient.getToken())
     const qbo = getQuickBooksClient(access_token, refresh_token)

@@ -37,7 +37,6 @@ const queryJournalsV2 = async (uid) => {
     // send the data through db in case of error
     throw e
   }
-  
 }
 class JournalController{
   async getJournals(req, res){
