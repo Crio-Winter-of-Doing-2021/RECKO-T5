@@ -21,6 +21,7 @@ const queryJournals = async (query) => {
 }
 
 // gets the journals directly via xero and quickbooks api
+// find a way to paginate!
 const queryJournalsV2 = async (uid) => {
   try{
     // get the tokenSet from table using user._id
@@ -59,7 +60,7 @@ class JournalController{
       res.send(journals)
     }catch(e){
       console.log(e.message)
-      res.status(400).json({error:e})
+      res.status(400).json({error:e.message})
     }
   }
 }

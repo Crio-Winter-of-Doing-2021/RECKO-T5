@@ -1,11 +1,6 @@
 const TokenSet = require('../../models/token')
 const oauthClient = require('../quickbooks-ouath-client')
 
-// const getQuickBooksTokenSet = async () => {
-//   const quickBooksTokenSet = await TokenSet.findOne({provider:"QUICKBOOKS"}).select('-provider -_id -__v')
-//   // console.log(quickBooksTokenSet.token)
-//   return quickBooksTokenSet.token
-// }
 
 const getQuickBooksTokenSet = async (uid) => {
   try{

@@ -19,6 +19,7 @@ const queryAccounts = async (query) => {
     throw e
   }
 }
+// find a way to paginate
 const queryAccountsV2 = async (uid) => {
   try{
     const xero_acc = XERO.getAllAccounts(uid)
@@ -41,7 +42,7 @@ class AccountController{
       res.send(accounts)
     }catch(e){
       console.log(e)
-      res.status(400).json({error:e})
+      res.status(400).json({error:e.message})
     }
   }
   async getAccountsV2(req, res){
@@ -50,10 +51,11 @@ class AccountController{
       const accounts = await queryAccountsV2(user._id)
       res.send(accounts)
     }catch(e){
-      console.log(e)
-      res.status(400).json({error:e})
+      console.log(e.message)
+      res.status(400).json({error:e.message})
     }
   }
+  // test and work on it
   async createAccount(req, res){
     try{
       const account = req.body
@@ -90,7 +92,7 @@ class AccountController{
       }
     }catch(e){
       // console.log(e)
-      res.status(400).json({error:e})
+      res.status(400).json({error:e.message})
     }
   }
 }

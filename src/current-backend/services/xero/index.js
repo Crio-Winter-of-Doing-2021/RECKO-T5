@@ -1,8 +1,10 @@
 const xero = require('./init')
 const {setXeroTokenSet, generateNewXeroToken} = require('./token')
 const {getAllAccounts, getAnAccount, createAccount} = require('./account')
-const {getAllEmployees,getAnEmployee } = require('./employee')
+const {getAllEmployees } = require('./employee')
 const {getAllJournals} = require('./journal')
+
+
 module.exports = {
   xero, 
   setXeroTokenSet,
@@ -11,6 +13,5 @@ module.exports = {
   getAnAccount,
   createAccount,
   getAllEmployees,
-  getAnEmployee,
   getAllJournals
 }
