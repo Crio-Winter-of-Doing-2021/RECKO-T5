@@ -33,6 +33,8 @@ const getAllJournals = async () => {
   }
 }
 
+
+
 const getAllManualJournals = async () => {
   try {
     await setXeroTokenSet()
