@@ -2,7 +2,7 @@ import AccountTable from '../AccountTable'
 import Error from '../Error'
 import Loading from '../Loading'
 import { AccountRowProps } from '../AccountRow'
-
+import { RepeatIcon } from '@chakra-ui/icons'
 import {useEffect, useState} from 'react'
 import useFetch from '../../hooks/useFetch'
 import Pagination from '../Pagination'
@@ -65,6 +65,9 @@ const AccountPage: React.FC<AccountPageProps> = () => {
       <>  
        {/* Create a button to create new accounts and a form to resolve that */}
         <AddAccountForm />
+        <RepeatIcon
+          onClick={refetch}
+        />
         <AccountTable 
           accounts = {data}
         />

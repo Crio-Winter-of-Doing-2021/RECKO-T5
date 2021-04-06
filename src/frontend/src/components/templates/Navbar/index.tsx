@@ -34,7 +34,7 @@ const Navbar: React.FC<NavbarProps> = () => {
       case "/account":
         return {navLink: "/", navLinkName:"Dashboard"}
       case "/":
-        return {navLink:"/admin", navLinkName:"Admin"}
+        return {navLink:"/admin", navLinkName:"User"}
       case "/login":
         return {navLink:"/register", navLinkName:"Register"} 
       case "/register":
