@@ -19,8 +19,8 @@ const API = require('./routers')
 
 
 // schedule jobs here : 
-const Scheduler = require('./scheduled_jobs')
-Scheduler()
+// const Scheduler = require('./scheduled_jobs')
+// Scheduler()
 
 // middleware
 app.use(express.json())

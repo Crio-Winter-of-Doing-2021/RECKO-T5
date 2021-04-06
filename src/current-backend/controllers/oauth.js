@@ -17,7 +17,9 @@ class OAuthController{
   }
   async XeroCallbackHandler(req,res){
     try {
-      const ts = await XERO.generateNewXeroToken(req.url)
+      // pass the user here aswell to save the new token
+      const {user} = req;
+      const ts = await XERO.generateNewXeroToken(req.url, user._id)
       res.send(ts);
     } catch (e) {
       console.log(e)
@@ -36,7 +38,8 @@ class OAuthController{
   }
   async QuickBooksCallbackHandler(req,res){
     try {
-      const tokenSet = await generateNewQuickBooksToken(req.url)
+      const {user} = req;
+      const tokenSet = await generateNewQuickBooksToken(req.url, user._id)
       // save this token to the database.
       console.log(tokenSet)
       res.json({tokenSet})

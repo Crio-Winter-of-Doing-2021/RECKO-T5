@@ -3,11 +3,11 @@ const QUICKBOOKS = require('../services/quickbooks')
 const XERO = require('../services/xero')
 
 
-const queryAccounts = async (query) => {
+const queryAccounts = async (query, uid) => {
   try{
     const {limit, offset} = query
-    const accounts = Account.find().limit(parseInt(limit)).skip(parseInt(offset)).sort({$natural:-1})
-    const totalNumber = Account.countDocuments()
+    const accounts = Account.find({uid}).limit(parseInt(limit)).skip(parseInt(offset)).sort({$natural:-1})
+    const totalNumber = Account.countDocuments({uid})
     return Promise.all([accounts, totalNumber]).then((vals) => {
       return ({
         accounts:vals[0],
@@ -19,24 +19,28 @@ const queryAccounts = async (query) => {
     throw e
   }
 }
+
 class AccountController{
   async getAccounts(req, res){
     try{
       const {query} = req 
-      const accounts = await queryAccounts(query)
+      const accounts = await queryAccounts(query, req.user._id)
       res.send(accounts)
     }catch(e){
       console.log(e)
-      res.status(400).json({error:e})
+      res.status(400).json({error:e.message})
     }
   }
+  
+  // test and work on it
   async createAccount(req, res){
     try{
       const account = req.body
       const {provider} = req.query 
+      const {user} = req;
       if(provider === "XERO"){
         try{
-          const acc = await XERO.createAccount(account)
+          const acc = await XERO.createAccount(account, user._id)
           // if success store the account in db
           const newAcc = new Account(acc)
           await newAcc.save()
@@ -48,7 +52,7 @@ class AccountController{
       }
       else if(provider === "QUICKBOOKS"){
         try{
-          const acc = await QUICKBOOKS.createAccount(account) 
+          const acc = await QUICKBOOKS.createAccount(account, user._id) 
           // if success store the account in db
           const newAcc = new Account(acc)
           await newAcc.save()
@@ -65,7 +69,7 @@ class AccountController{
       }
     }catch(e){
       // console.log(e)
-      res.status(400).json({error:e})
+      res.status(400).json({error:e.message})
     }
   }
 }

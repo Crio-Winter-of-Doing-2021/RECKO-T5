@@ -3,11 +3,10 @@ const {setQuickBooksTokenSet} = require('./token')
 const oauthClient = require('../quickbooks-ouath-client/index')
 
 
-
-const getAllJournals = async (callback) => {
+const getAllJournals = async (uid) => {
   try{
     const mappedData = []
-    await setQuickBooksTokenSet()
+    await setQuickBooksTokenSet(uid)
     const {access_token, refresh_token} = oauthClient.getToken()
     // await refreshQuickBooksTokenSet(oauthClient.getToken())
     const qbo = getQuickBooksClient(access_token, refresh_token)
@@ -29,7 +28,8 @@ const getAllJournals = async (callback) => {
                 accountId : jl.JournalEntryLineDetail.AccountRef.value,
                 amount : jl.Amount,
                 date : journal.TxnDate,
-                type : jl.JournalEntryLineDetail.PostingType
+                type : jl.JournalEntryLineDetail.PostingType,
+                uid
               }
               mappedData.push(record)
             })
@@ -45,6 +45,7 @@ const getAllJournals = async (callback) => {
     throw e
   }
 }
+
 
 module.exports = {
   getAllJournals

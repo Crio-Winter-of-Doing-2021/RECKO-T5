@@ -58,7 +58,7 @@ const AddAccountForm: React.FC<AddAccountFormProps> = () => {
       console.log(data)
       setLoading(true)
       const response = await HTTP({
-        url:`/account?${queryParam}`,
+        url:`/v2/account?${queryParam}`,
         headers:null,
         body:data,
         method:"POST"
@@ -90,7 +90,7 @@ const AddAccountForm: React.FC<AddAccountFormProps> = () => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Add an Account</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             {/* Create a form for account POST API */}

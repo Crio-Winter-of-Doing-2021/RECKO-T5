@@ -1,19 +1,29 @@
 const TokenSet = require('../../models/token')
 const oauthClient = require('../quickbooks-ouath-client')
 
-const getQuickBooksTokenSet = async () => {
-  const quickBooksTokenSet = await TokenSet.findOne({provider:"QUICKBOOKS"}).select('-provider -_id -__v')
-  // console.log(quickBooksTokenSet.token)
-  return quickBooksTokenSet.token
+
+const getQuickBooksTokenSet = async (uid) => {
+  try{
+    const quickBooksTokenSet = await TokenSet.findOne({provider:"QUICKBOOKS", uid}).select('-provider -_id -__v -uid')
+    if(quickBooksTokenSet){
+      return quickBooksTokenSet.token
+    }else{
+      throw new Error("Authorize QUICKBOOKS")
+    }
+    // console.log(quickBooksTokenSet.token)
+  }catch(e){
+    console.log(e)
+    throw e
+  }
+  
 }
+
 
 const refreshQuickBooksTokenSet = async (tokenSet) => {
   try{
     // console.log("refresh token for refreshing the token : ", tokenSet.refresh_token)
     const authResponse = await oauthClient.refreshUsingToken(tokenSet.refresh_token)
-    // const authResponse = await oauthClient.refresh()
-    // console.log("refresh token response : ", authResponse)
-    // console.log("refreshed token : ", authResponse.token)
+    
     return authResponse.token
   }catch(e){
     console.error('The error message is :' + e.originalMessage);
@@ -23,45 +33,42 @@ const refreshQuickBooksTokenSet = async (tokenSet) => {
   
 }
 
-const setQuickBooksTokenSet = async () => {
+const setQuickBooksTokenSet = async (uid) => {
   // gets the token from db
   try{
-    const check = oauthClient.getToken()
-    if(check.accessToken && check.isAccessTokenValid()){
-      console.log("QUICKBOOKS token already set")
-      return;
-    }
-    let tokenSet = await getQuickBooksTokenSet()
-    // if tokenSet is not avialable return
-    if(!tokenSet){
+    const ts = await getQuickBooksTokenSet(uid)
+    if(!ts){
       console.log("QUICKBOOKS Token Set not found please process with authorization first")
+      throw new Error("QUICKBOOKS Token Set not found please process with authorization first")
+    }
+
+    const check = oauthClient.setToken(ts)
+    if(check.accessToken && check.isAccessTokenValid()){
+      console.log("QUICKBOOKS token set")
       return;
     }
-    // console.log("the token set from db " , tokenSet)
     // if tokenSet is expired , refresh it
-    oauthClient.setToken(tokenSet)
-    // console.log(oauthClient.getToken())
     if(!oauthClient.isAccessTokenValid()){
       const newTokenSet = await refreshQuickBooksTokenSet(oauthClient.getToken())
-      await TokenSet.deleteMany({provider:"QUICKBOOKS"})
-      const DBTokenSet = new TokenSet({token:newTokenSet, provider:"QUICKBOOKS"})
+      const updateTS = await TokenSet.findOne({provider:"QUICKBOOKS", uid})
+      updateTS.token = newTokenSet
       // saves the new token
-      const ts = await DBTokenSet.save() 
+      await updateTS.save()
       // set the token now
       console.log("Quickbook token successfully updated and set")
       // console.log(ts)
       return
     }
-    console.log("Quickbook token successfully set")
-    return
+    else{
+      throw new Error("Please authorize QUICKBOOKS again!")
+    }
   }catch(e){
     console.log(e)
     throw e
   }
-  
 }
 
-const generateNewQuickBooksToken = async (url) => {
+const generateNewQuickBooksToken = async (url, uid) => {
   try {
     // calling apiCallback will setup all the client with
     // and return the orgData of each authorized tenant
@@ -73,11 +80,15 @@ const generateNewQuickBooksToken = async (url) => {
     // this is where you can associate & save your
     // `tokenSet` to a user in your Database
     // removes the pre-existing token
-    await TokenSet.deleteMany({provider:"QUICKBOOKS"})
-    const DBTokenSet = new TokenSet({token: tokenSet, provider:"QUICKBOOKS"})
-    // saves the new token
-    const ts = await DBTokenSet.save()
-    return ts;
+    const ts = await TokenSet.findOne({provider:"QUICKBOOKS", uid})
+    if(ts){
+      ts.token = tokenSet
+      await ts.save()
+      return ts
+    }
+
+    const createTS = await TokenSet.create({token: tokenSet, provider:"QUICKBOOKS", uid}) 
+    return createTS;
   } catch (e) {
     console.log(e)
     throw e

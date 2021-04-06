@@ -5,10 +5,10 @@ const { AccountType } = require('xero-node')
 
 const xeroTenantId = process.env.XERO_TENANT_ID
 
-const getAllAccounts = async () => {
+const getAllAccounts = async (uid) => {
   try {
     // GET ALL
-    await setXeroTokenSet()
+    await setXeroTokenSet(uid)
     const tenants = await xero.updateTenants()
     const accountsGetResponse = await xero.accountingApi.getAccounts(tenants[0].tenantId);
     const accounts = accountsGetResponse.response.body.Accounts
@@ -18,7 +18,8 @@ const getAllAccounts = async () => {
       active:acc.Status === "ACTIVE",
       class: acc.Class,
       type:acc.Type,
-      provider:"XERO"
+      provider:"XERO",
+      uid
     }))
     return mappedData
   } catch(e){
@@ -26,9 +27,9 @@ const getAllAccounts = async () => {
     throw e
   }
 }
-const getAnAccount = async (id) => {
+const getAnAccount = async (id, uid) => {
   try {
-    await setXeroTokenSet()
+    await setXeroTokenSet(uid)
     const accountGetResponse = await xero.accountingApi.getAccount(xeroTenantId, id);
     return accountGetResponse
   } catch (e) {
@@ -36,9 +37,9 @@ const getAnAccount = async (id) => {
     throw e
   }
 }
-const createAccount = async ({name, code, type, bankAccountNumber}) => {
+const createAccount = async ({name, code, type, bankAccountNumber}, uid) => {
   try{
-    await setXeroTokenSet()
+    await setXeroTokenSet(uid)
 
     if(type === AccountType.BANK && !bankAccountNumber){
       throw new Error("bank account number is required for account of type BANK")
@@ -55,7 +56,8 @@ const createAccount = async ({name, code, type, bankAccountNumber}) => {
       active:acc.status === "ACTIVE",
       class: acc.class,
       type:acc.type,
-      provider:"XERO"
+      provider:"XERO",
+      uid
     }
     return mappedData
   }catch(e){

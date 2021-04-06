@@ -2,11 +2,11 @@ const QUICKBOOKS = require('../services/quickbooks')
 const XERO = require('../services/xero')
 const Account = require('../models/account')
 
-const updateAccountDatabase = () => {
+const updateAccountDatabase = (uid) => {
   try{
-    const q_acc = QUICKBOOKS.getAllAccounts()
-    const x_acc = XERO.getAllAccounts()
-    const accounts = Promise.all([q_acc, x_acc]).then((async ([x,y]) => {
+    const q_acc = QUICKBOOKS.getAllAccounts(uid)
+    const x_acc = XERO.getAllAccounts(uid)
+    return Promise.all([q_acc, x_acc]).then((async ([x,y]) => {
       const allAccounts = [...x, ...y]
       try{
         const saveEntries = await Account.insertMany(allAccounts)
@@ -25,15 +25,15 @@ const updateAccountDatabase = () => {
   
 } 
 
-const scheduleJobForAccounts  = () => {
-  // 1 hr in milliseconds
-  console.log("saving accounts to database every 2 hr")
-  const scheduleTime =  2*60*60*1000
-  // initial call when server starts
-  updateAccountDatabase()
-  setInterval(()=>{
-    updateAccountDatabase()
-  },scheduleTime)
-}
+// const scheduleJobForAccounts  = async (uid) => {
+//   // 1 hr in milliseconds
+//   console.log("saving accounts to database every 4 hr for userId ", uid)
+//   const scheduleTime =  4*60*60*1000
+//   // initial call when server starts
+//   await updateAccountDatabase(uid)
+//   setInterval(() => {
+//     updateAccountDatabase(uid)
+//   },scheduleTime)
+// }
 
-module.exports = scheduleJobForAccounts
+module.exports = updateAccountDatabase

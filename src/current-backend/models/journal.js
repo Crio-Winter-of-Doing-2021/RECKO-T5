@@ -1,11 +1,16 @@
 const mongoose = require("mongoose")
+const {ObjectId} = require('mongoose').Schema.Types
 
 const JournalSchema = new mongoose.Schema({
+  uid:{
+    type: ObjectId,
+    ref:"User",
+    required:[true, "User id is required"]
+  },
   jid:{
     type:String,
     trim:true,
     required:[true, 'a unique id for a journal is required, to avoid duplication'],
-    unique:[true, 'jid must be unique to avoid duplication']
   },
   provider:{
     type:String,
@@ -32,5 +37,6 @@ const JournalSchema = new mongoose.Schema({
   },
 })
 
+JournalSchema.index({ uid: 1, jid: 1 }, { unique: true });
 
 module.exports = new mongoose.model("Journal", JournalSchema)

@@ -4,9 +4,9 @@ const oauthClient = require('../quickbooks-ouath-client/index')
 
 
 
-const getAllEmployees = async (callback) => {
+const getAllEmployees = async (uid) => {
   try{
-    await setQuickBooksTokenSet()
+    await setQuickBooksTokenSet(uid)
     const {access_token, refresh_token} = oauthClient.getToken()
     // await refreshQuickBooksTokenSet(oauthClient.getToken())
     const qbo = getQuickBooksClient(access_token, refresh_token)
@@ -23,7 +23,8 @@ const getAllEmployees = async (callback) => {
                 eid: emp.Id,
                 active: emp.Active,
                 firstName:emp.GivenName,
-                lastName:emp.FamilyName
+                lastName:emp.FamilyName,
+                uid
               }
             })
             resolve(mappedData)

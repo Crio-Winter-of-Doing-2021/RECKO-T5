@@ -1,11 +1,15 @@
-const scheduleJobForJournals = require('./journal')
-const scheduleJobForAccounts = require('./account')
-const scheduleJobForEmployee = require('./employee')
+const updateJournalDatabase = require('./journal')
+const updateAccountDatabase = require('./account')
+const updateEmployeeDatabase = require('./employee')
 
-const Scheduler = () => {
-  scheduleJobForAccounts()
-  scheduleJobForJournals()
-  scheduleJobForEmployee()
+const UpdateUserData = async (uid) => {
+  return Promise.all([updateJournalDatabase(uid),updateAccountDatabase(uid),updateEmployeeDatabase(uid)]).then(([a, b, c]) => {
+    console.log("data stored for userId : " ,uid)
+  }).catch(e => {
+    console.log(error)
+    throw e
+  })
 }
 
-module.exports = Scheduler
+
+module.exports = UpdateUserData
