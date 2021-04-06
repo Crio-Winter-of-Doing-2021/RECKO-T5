@@ -18,7 +18,8 @@ const getAllAccounts = async (uid) => {
       active:acc.Status === "ACTIVE",
       class: acc.Class,
       type:acc.Type,
-      provider:"XERO"
+      provider:"XERO",
+      uid
     }))
     return mappedData
   } catch(e){
@@ -55,7 +56,8 @@ const createAccount = async ({name, code, type, bankAccountNumber}, uid) => {
       active:acc.status === "ACTIVE",
       class: acc.class,
       type:acc.type,
-      provider:"XERO"
+      provider:"XERO",
+      uid
     }
     return mappedData
   }catch(e){

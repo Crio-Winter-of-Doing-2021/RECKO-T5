@@ -20,7 +20,8 @@ const getAllJournals = async (uid) => {
           accountId : jl.accountCode,
           amount : jl.grossAmount,
           date : journal.journalDate,
-          type: jl.netAmount > 0 ? "DEBIT" : "CREDIT"
+          type: jl.netAmount > 0 ? "DEBIT" : "CREDIT",
+          uid
         }
         mappedData.push(record)
       })

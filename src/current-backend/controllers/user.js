@@ -75,6 +75,7 @@ class UserController{
           maxAge: OneDayInSec * 1000,
           ...cookieConfig,
         });
+        
         res.status(200).json({user: user._id})
       }else{
         res.status(404).json({error:"user not found"})
@@ -89,10 +90,20 @@ class UserController{
     try{
       // destroy the cookie
       res.cookie("user", null, { maxAge: 1, ...cookieConfig });
+      res.cookie("update", null, { maxAge: 1, ...cookieConfig });
       res.status(200).json({message:"user successfully logged out"})
     }catch(e){
       console.log(e)
       res.status(500).json({error:"something went wrong"})
+    }
+  }
+  async getCurrentUser(req, res){
+    try{
+      req.user.password = undefined
+      res.send(req.user)
+    }catch(e){
+      console.log(e)
+      res.status(400).json({error:e.message})
     }
   }
   async GetAllUsers(req, res){

@@ -23,7 +23,8 @@ const getAllEmployees = async (uid) => {
                 eid: emp.Id,
                 active: emp.Active,
                 firstName:emp.GivenName,
-                lastName:emp.FamilyName
+                lastName:emp.FamilyName,
+                uid
               }
             })
             resolve(mappedData)

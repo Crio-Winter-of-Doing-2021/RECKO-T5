@@ -28,7 +28,8 @@ const getAllJournals = async (uid) => {
                 accountId : jl.JournalEntryLineDetail.AccountRef.value,
                 amount : jl.Amount,
                 date : journal.TxnDate,
-                type : jl.JournalEntryLineDetail.PostingType
+                type : jl.JournalEntryLineDetail.PostingType,
+                uid
               }
               mappedData.push(record)
             })

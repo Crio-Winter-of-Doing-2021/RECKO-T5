@@ -105,7 +105,7 @@ const DashBoard: React.FC<DashBoardProps> = () => {
       data.sort(sortDsc(sortBy.property))
     }
   }
-  
+
   return (
       <>
         <FilterBox onRadioChangeHandler={onRadioChangeHandler} radioValue={radioValue} />

@@ -24,7 +24,8 @@ const getAllAccounts = async (uid) => {
               type:acc.AccountType,
               active:acc.Active,
               class:acc.Classification,
-              provider:"QUICKBOOKS"
+              provider:"QUICKBOOKS",
+              uid
           }))
             // console.log(callback)
             resolve(mappedData)
@@ -57,7 +58,8 @@ const createAccount = async (account, uid) => {
               type:acc.AccountType,
               active:acc.Active,
               class:acc.Classification,
-              provider:"QUICKBOOKS"
+              provider:"QUICKBOOKS",
+              uid
             }
             resolve(mappedData)
           }  

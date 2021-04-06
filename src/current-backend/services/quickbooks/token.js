@@ -23,9 +23,7 @@ const refreshQuickBooksTokenSet = async (tokenSet) => {
   try{
     // console.log("refresh token for refreshing the token : ", tokenSet.refresh_token)
     const authResponse = await oauthClient.refreshUsingToken(tokenSet.refresh_token)
-    // const authResponse = await oauthClient.refresh()
-    // console.log("refresh token response : ", authResponse)
-    // console.log("refreshed token : ", authResponse.token)
+    
     return authResponse.token
   }catch(e){
     console.error('The error message is :' + e.originalMessage);

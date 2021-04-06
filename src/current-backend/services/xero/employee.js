@@ -14,7 +14,8 @@ const getAllEmployees = async (uid) => {
         eid : emp.employeeID,
         active : emp.status === "ACTIVE",
         firstName: emp.firstName,
-        lastName : emp.lastName
+        lastName : emp.lastName,
+        uid
       }
     })
     return employees

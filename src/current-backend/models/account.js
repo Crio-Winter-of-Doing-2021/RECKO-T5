@@ -1,6 +1,11 @@
 const mongoose = require("mongoose")
-
+const {ObjectId} = require('mongoose').Schema.Types
 const AccountSchema = new mongoose.Schema({
+  uid:{
+    type: ObjectId,
+    ref:"User",
+    required:[true, "User id is required"]
+  },
   type:{
     type:String, 
     required:[true, "type of account is required"],
@@ -17,7 +22,6 @@ const AccountSchema = new mongoose.Schema({
   aid:{
     type:String,
     required:[true, "account id is reuqired"],
-    unique:[true, "account must have a unique identifier"]
   },
   class:{
     type:String,
@@ -29,5 +33,9 @@ const AccountSchema = new mongoose.Schema({
     enum : ["QUICKBOOKS", "XERO"]
   }
 })
+
+AccountSchema.index({ uid: 1, aid: 1 }, { unique: true });
+
+
 
 module.exports = new mongoose.model("Account", AccountSchema)
