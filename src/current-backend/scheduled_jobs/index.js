@@ -6,7 +6,7 @@ const UpdateUserData = async (uid) => {
   return Promise.all([updateJournalDatabase(uid),updateAccountDatabase(uid),updateEmployeeDatabase(uid)]).then(([a, b, c]) => {
     console.log("data stored for userId : " ,uid)
   }).catch(e => {
-    console.log(error)
+    console.log(e)
     throw e
   })
 }
