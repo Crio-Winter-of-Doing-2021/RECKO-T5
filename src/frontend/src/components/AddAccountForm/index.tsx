@@ -58,7 +58,7 @@ const AddAccountForm: React.FC<AddAccountFormProps> = () => {
       console.log(data)
       setLoading(true)
       const response = await HTTP({
-        url:`/v2/account?${queryParam}`,
+        url:`/account?${queryParam}`,
         headers:null,
         body:data,
         method:"POST"
